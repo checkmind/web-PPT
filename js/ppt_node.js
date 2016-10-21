@@ -18,40 +18,62 @@ app.all('*', function(req, res, next) {
 app.post('/ppt', function (req, res) {
    console.log("登陆 POST 请求");
    res.header("Access-Control-Allow-Origin", "*");
-   json = {
-	   "h1" : {
-		"block" : {
-			"width" : "100%",
-			"height": ".2rem",
-			"background":"white",
-			"left" : "0",
-			"right": "0",
-			"font-size" : ".1rem",
-			"font-style" : "微软雅黑",
-			"color":"black",
-			"line-height": ".1rem",
-			"text-align":"center"
-		},	
-		"id" : "h1_1",
-		"text" : "这是主标题"
+   json = [{
+	"parameter" : {  //ppt整体 背景、音乐等参数
+		"background-color" : "#ccc",
+		"background-music" : "none",
+		"background-image" : "none",
+		"background-size" : "cover",
+		"page"	: "0",
+		"color" : "white"
 	},
-	"span" : {
-		"block" : {
-			"width" : "100%",
-			"height": ".2rem",
-			"background":"yellow",
-			"left" : "0",
-			"right": "0",
-			"font-size" : ".1rem",
-			"font-style" : "微软雅黑",
-			"color":"red",
-			"line-height": ".1rem",
-			"text-align":"center"
-		},	
-		"id" : "h1_1",
-		"text" : "这是内容"
+	"element" : {  //各个元素参数 
+					"h1" : {
+							"id" : "h1_1",
+							"text" : "这是主标题",
+							"block" : {
+								"width" : "3rem",
+								"height": ".2rem",
+								
+								"left" : "0",
+								"top": ".1rem",
+								"font-size" : ".1rem",
+								"font-style" : "微软雅黑",
+								"line-height": ".2rem",
+								"text-align":"center"
+							}
+					
+					}
 	}
-   }
+},{
+	"parameter" : {  //ppt整体 背景、音乐等参数
+		"background-color" : "white",
+		"background-music" : "none",
+		"background-image" : "none",
+		"background-size" : "cover",
+		"color" : "white",
+		"left" : "3rem",
+		"page"	: "0"
+	},
+	"element" : {  //各个元素参数 
+					"h2" : {
+							"id" : "h1_2",
+							"text" : "这是副标题",
+							"block" : {
+								"width" : "100%",
+								"height": ".4rem",
+								"background":"white",
+								"border" : "1px solid #333",
+								"left" : "0",
+								"top": ".5rem",
+								"font-size" : ".1rem",
+								"line-height": ".4rem",
+								"text-align":"center"
+							}
+					
+					}
+	}
+}];
    json = JSON.stringify(json);
    res.send(json);
 })

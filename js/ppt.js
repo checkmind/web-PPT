@@ -9,7 +9,8 @@
 		_this.headTop = 0.15;	//高度
 		_this.rem = _this.width / 3;
 		_this.bottomTop =document.documentElement.clientHeight/_this.rem - 0.15;  
-		
+		_this.nowPage = 0; //当前页
+		_this.allPage = 0; //所有页
 		_this.getDates = function(){ //得到后台的ppt数据
 			
 			$.ajax({
@@ -21,24 +22,81 @@
 			    success: function(req) {
 			        _this.data = req;
 					_this.displayView();
+					_this.cutPageAdd();
 			    }
 			});
 		}
 		_this.displayView = function(){ //渲染表现层
+
 			var la = "";
 			var str = "";
-			for(var key in _this.data){
-				la = _this.data[key].block;
-				la = JSON.stringify(la);
+			_this.allPage = _this.data.length; //总共页数
+			for(var page = 0; page < _this.data.length; page++){ // page 页数
+				str = "";
+				//page 属性
+				la = _this.data[page]["parameter"];
+				$("section").html($("section").html()+"<div class='page' style='"+_this.parseCss(la)+";z-index:"+(_this.data.length-page)+"'></div>");
+				$("section").css({
+					"width" : _this.width*_this.allPage+1+"px"
+				})
+				//渲染所有节点
+				for(var key_2 in _this.data[page]["element"]){
+					
+					la = _this.data[page]["element"][key_2].block;
+					/*
+					la = JSON.stringify(la);
+					str1 = la.replace(/,/g,";");
+					str1 = str1.replace(/{|}|"/g," ");
+					*/
+					str+= "<"+ key_2 + " id='" + _this.data[page]["element"][key_2].id + "' style='"+_this.parseCss(la)+"'>" 
+					         + _this.data[page]["element"][key_2].text +
+					      "</"+ key_2 + ">";
+				}
+				console.log(str);
+				$(".page:eq("+page+")").html(str);  //将str装载进对应的section
+			}
+		}
+		_this.parseCss = function(str){ //将 json 对象组变成 css属性对
+			return (function(){
+				la = JSON.stringify(str);
 				str1 = la.replace(/,/g,";");
 				str1 = str1.replace(/{|}|"/g," ");
-				str+= "<"+ key + " id='" + _this.data[key].id + "' style='"+str1+"'>" 
-				         + _this.data[key].text +
-				      "</"+ key + ">";
-			}
-			$("section:eq(0)").html(str);
+				return str1;
+			})();
 		}
-		
+		_this.cutPageAdd = function(){ //切页面方法
+			$("section").click(function(){
+				_this.nowPage++;
+			
+			})
+			var scrollFunc = function(e){
+				 var direct=0;
+				  e=e || window.event;
+				  console.log(e);
+				  e = e.detail || e.wheelDelta 
+				  if(e>0){
+				  	_this.nowPage++;
+				  	_this.pageAdd(_this.nowPage);
+				
+				  }else{
+				  	_this.nowPage++;
+				  	_this.pageAdd(_this.nowPage);
+					
+				  }
+				   
+			    
+			}
+			
+			 if(document.addEventListener){
+				 document.addEventListener('DOMMouseScroll',scrollFunc,false);
+			 }//W3C
+			 window.onmousewheel=document.onmousewheel=scrollFunc;//IE/Opera/Chrome/Safari
+		}
+		_this.pageAdd = function(page){
+			$("section").animate({
+					"left" : -(page*3) + "rem"
+			},500)
+		}
 		/************下面是控制器(next is ctrl head and footer)***********/
 		
 		_this.listenMouse = function(){
