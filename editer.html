@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>web PPT to vistor</title>
+	<script type="text/javascript">
+	
+		document.getElementsByTagName('html')[0].style.fontSize = document.documentElement.clientWidth/3 + "px";
+		/*window.onresize = function(){
+			document.getElementsByTagName('html')[0].style.fontSize = document.documentElement.clientWidth/3 + "px";
+		}
+		*/
+		
+	</script>
+</head>
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/editStyle.css">
+<link rel="stylesheet" type="text/css" href="css/page.css">
+<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<body>
+
+<section>
+	
+	<div class="page">
+	<input type="text" id="e0" class="h1"   placeholder="点击添加标题">
+	<input type="text" id="e1"  class="h2" placeholder="点击添加标题"> 
+	 </div>
+
+</section>
+<!-- 菜单栏-->
+<div id="navRight">
+	<div id="navHead">
+	<div class="btn-group" style="float: left;">
+		<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">hello user <span class="caret"></span></button>
+			<ul class="dropdown-menu" role="menu">
+				<li><a href="javascript:;">my center</a></li>
+				<li><a href="javascript:;">send inf to editer</a></li>
+				<li><a href="javascript:;">logout</a></li>
+				<li><a href="javascript:;">help</a></li>
+			</ul>
+		</div>  
+		<a href="javascript:;" title="minmize"><span class="glyphicon glyphicon-minus"></span></a> &nbsp
+		<a href="javascript:;" title="save all"> <span class="glyphicon glyphicon-saved"></span> </a>
+	</div>
+	<div id="navCenter">
+		<div class="insert">
+			<h3>插入</h3>
+			<a href="javascript:;" class="col-xs-6 col-lg-4">
+				<div>
+					<span class="glyphicon glyphicon-edit"></span>
+				</div>
+				<li>文本框</li>
+			</a>
+			<a href="javascript:;" class="col-xs-6 col-lg-4">
+				<div>
+					<span class="glyphicon glyphicon-unchecked"></span>
+				</div>
+				<li>图形</li>
+			</a>
+			<a href="javascript:;" class="col-xs-6 col-lg-4">
+				<div>
+					<span class="glyphicon glyphicon-picture"></span>
+				</div>
+				<li>图片</li>
+			</a>
+			<a href="javascript:;" class="col-xs-6 col-lg-4">
+				<div>
+					<span class="glyphicon glyphicon-calendar"></span>
+				</div>
+				<li>表格</li>
+			</a>
+		</div>
+		
+		<div class="back">
+			<h3>背景设置</h3>
+			<a href="javascript:;" class="col-xs-6 col-lg-4">
+				<div>
+				<span class="glyphicon glyphicon-tint"></span>
+				</div>
+				<li>背景颜色</li>
+			</a>
+			
+			<a href="javascript:;" class="col-xs-6 col-lg-4">
+				<div>
+					<span class="glyphicon glyphicon-picture"></span>
+				</div>
+				<li>背景图片</li>
+			</a>
+			<a href="javascript:;" class="col-xs-6 col-lg-4">
+				<div>
+					<span class="glyphicon glyphicon-music"></span>
+				</div>
+				<li>背景音乐</li>
+			</a>
+		</div>
+	</div>
+	<div id="navBottom">
+		<a href="javascript:;"><span class="glyphicon glyphicon-plus-sign addPage">add page</span></a>
+		goto page to    <div class="btn-group dropup">
+			<button type="button" class="btn btn-default dropdown-toggle NowPage" data-toggle="dropdown" data-no-turbolink="true">
+				1 <span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu btmDrop" role="menu">
+				
+			</ul>
+		</div>
+	</div>
+</div>
+
+<div class ="navTool">
+	<span>文字对齐方式:</span>
+	<div>
+		<a href="javascript:;" title="向左对齐">
+			<span class="glyphicon glyphicon-align-left"></span>
+		</a>
+		<a href="javascript:;" title="居中对齐">
+			<span class="glyphicon glyphicon-align-center"></span>
+		</a>
+		<a href="javascript:;" title="向右对齐">
+			<span class="glyphicon glyphicon-align-right"></span>
+		</a>
+	|</div>
+	
+	
+	<span> 字体:</span>
+	<div class="btn-group">
+		<button type="button" class="btn btn-default dropdown-toggle" 
+				data-toggle="dropdown">
+			默认 <span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu" role="menu" >
+			<li><a href="#">功能</a></li>
+			<li><a href="#">另一个功能</a></li>
+			<li><a href="#">其他</a></li>
+			<li class="divider"></li>
+			<li><a href="#">分离的链接</a></li>
+		</ul>
+	</div>
+	|
+	<span> 字体颜色:</span>
+	<div class="fColorBody">
+		<button class="fontColors"></button>
+		<div class="colorTable">
+			<canvas width="150" height="150" id="canvas" class="canvas"></canvas>
+		</div>
+	</div>
+</div>
+</body>
+
+<script src="js/edit_fun.js"></script>
+
+<script type="text/javascript">
+	   document.onselectstart=function(){return false;} //禁止文本被选中
+	  
+</script>
+</html>

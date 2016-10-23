@@ -1,0 +1,29 @@
+.page{
+	padding:.1rem;
+}
+.page input{
+	width: 40%;
+	padding: .1rem;
+	left: 30%;
+	top:40%;
+	border:1px dotted blue;
+	font-size: .05rem;
+	display: block;
+}
+#e0{
+	font-size: .1rem;
+	top: 5%;
+	width: 80%;
+	left:10%;
+}
+#e1{
+	width: 60%;
+	left:20%;
+	top:40%;
+	font-size: .05rem;
+}
+
+.page input{
+	background:none;
+	text-align: center;
+}
