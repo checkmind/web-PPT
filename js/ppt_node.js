@@ -28,49 +28,30 @@ app.post('/ppt', function (req, res) {
 		"color" : "white"
 	},
 	"element" : {  //各个元素参数 
-					"h1" : {
-							"id" : "h1_1",
-							"text" : "这是主标题",
-							"block" : {
+					"a" : {
+							"text" : "这是主标题", //内容
+							"attr" : { //attr属性
+								"id" : "h1_1",
+								"href" : "http://www.baidu.com"
+							},
+							"block" : {  //style属性
 								"width" : "3rem",
 								"height": ".2rem",
-								
 								"left" : "0",
 								"top": ".1rem",
 								"font-size" : ".1rem",
 								"font-style" : "微软雅黑",
 								"line-height": ".2rem",
 								"text-align":"center"
+							},
+							"animate" : { //运动参数
+								"animateIn" : { //入场动画
+									"top" : "1rem"
+								},
+								"animateOut" : { // 出场动画
+									"top" : "3rem"
+								}
 							}
-					
-					}
-	}
-},{
-	"parameter" : {  //ppt整体 背景、音乐等参数
-		"background-color" : "white",
-		"background-music" : "none",
-		"background-image" : "none",
-		"background-size" : "cover",
-		"color" : "white",
-		"left" : "3rem",
-		"page"	: "0"
-	},
-	"element" : {  //各个元素参数 
-					"h2" : {
-							"id" : "h1_2",
-							"text" : "这是副标题",
-							"block" : {
-								"width" : "100%",
-								"height": ".4rem",
-								"background":"white",
-								"border" : "1px solid #333",
-								"left" : "0",
-								"top": ".5rem",
-								"font-size" : ".1rem",
-								"line-height": ".4rem",
-								"text-align":"center"
-							}
-					
 					}
 	}
 }];
