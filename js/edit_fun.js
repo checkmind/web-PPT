@@ -15,43 +15,43 @@
 			},
 			"element" : {
 				"e0" : {
-								"text" : {
+							"text" : {
 
-								}, //内容
-								"attr" : { //attr属性
-									"id" : "h1"
+							}, //内容
+							"attr" : { //attr属性
+								"id" : "h1"
+							},
+							"block" : {  //style属性
+								
+							},
+							"animate" : { //运动参数
+								"animateIn" : { //入场动画
+									"top" : "1rem"
 								},
-								"block" : {  //style属性
-									
-								},
-								"animate" : { //运动参数
-									"animateIn" : { //入场动画
-										"top" : "1rem"
-									},
-									"animateOut" : { // 出场动画
-										"top" : "3rem"
-									}
+								"animateOut" : { // 出场动画
+									"top" : "3rem"
 								}
+							}
 				
 						},
 				"e1" : {
-					"text" : {
+							"text" : {
 
-								}, //内容
-								"attr" : { //attr属性
-									"id" : "h1"
+							}, //内容
+							"attr" : { //attr属性
+								"id" : "h1"
+							},
+							"block" : {  //style属性
+								
+							},
+							"animate" : { //运动参数
+								"animateIn" : { //入场动画
+									"top" : "1rem"
 								},
-								"block" : {  //style属性
-									
-								},
-								"animate" : { //运动参数
-									"animateIn" : { //入场动画
-										"top" : "1rem"
-									},
-									"animateOut" : { // 出场动画
-										"top" : "3rem"
-									}
+								"animateOut" : { // 出场动画
+									"top" : "3rem"
 								}
+							}
 				}		
 			}
 
@@ -64,6 +64,10 @@
 			_this.moveEle("#e1")
 			_this.borderNone($("#e0"));
 			_this.borderNone($("#e1"));
+			_this.dragScale("#navRight");
+			_this.dragScale("#e0");
+			_this.dragScale("#e1");
+
 		}
 		_this.addEleStyle = function(json){ //type: text/attr/block/animate   增加属性 函数
 			var fun = {
@@ -99,8 +103,11 @@
 			ele.id = json.id;
 			ele.placeholder = "请输入内容";
 			$(".page:eq("+_this.pageNow+")").append(ele);
+
 			_this.borderNone($("#"+json.id));
-			_this.moveEle("#"+json.id)
+			_this.moveEle("#"+json.id);
+			this.dragScale("#"+json.id);
+
 			var eIndex = $(ele).index(); //下标
 			_this.sectionObj[_this.pageNow]["element"]["e"+eIndex] = {
 				"text" : {
@@ -138,29 +145,21 @@
 		_this.scaleOnoff = function(ev,width,height){
 			return ((ev.offsetX>=width-_this.eMinTriger*2)&&(ev.offsetY>=height-_this.eMinTriger*2))
 		}
-		_this.dragScale = function(obj){ //控制控件缩放
-			_this.drag(obj);
+		
+
+		
+		// *****************
+		_this.dragScale = function(obj){ //控制控件右下角缩放
 			$(obj).mousemove(function(ev){
 					var width = $(obj).innerWidth();
 					var height = $(obj).innerHeight();
 					var oLeft =  $(obj).offset().left;
 					var oTop = $(obj).offset().top;
-
-		_this.cursor = ["n-resize","e-resize","default"]; //上下左右
-		// *****************
-		_this.dragScale = function(obj){ //控制控件缩放
-			$(obj).mousemove(function(ev){
-					var width = $(obj).width();
-					var height = $(obj).height();
-					
-
 				if(ev.offsetX>=_this.eMinTriger&&ev.offsetY>=_this.eMinTriger&&ev.offsetX<=width-_this.eMinTriger&&ev.offsetY<=height-_this.eMinTriger){
 			  		$(obj).css("cursor",_this.cursor[2]);
 			  		
-			  	}else{
-
-				  		
-					  	if(_this.scaleOnoff(ev,width,height)){ //右边
+			  	}else{	
+					  	if(_this.scaleOnoff(ev,width,height)){ //
 					  		$(obj).css("cursor",_this.cursor[1])
 					  		
 					  		_this.addWH({
@@ -170,6 +169,7 @@
 				  				width : width,
 				  				height : height,
 				  				left : oLeft,
+				  				top : oTop,
 				  				dir : 4
 				  			})
 				  			
@@ -178,7 +178,8 @@
 				  	}
 			});
 		}
-		_this.addWH = function(json){ //增加高度和宽度
+		
+		_this.addWH = function(json){
 			$(json.obj).mousedown(function(ev){
 				var x_X = ev.clientX;
 				var y_Y = ev.clientY;
@@ -190,76 +191,15 @@
 
 						$(json.obj).css("width",(num+json.width + "px"));
 						$(json.obj).css("height",(num_H+json.height +"px"));
-						
+	
 				})
 				$(document).mouseup(function(){
 					$(document).unbind("mousemove");
 					$(document).unbind("mouseup");
-
-				  		if(ev.offsetX<=_this.eMinTriger){  //左边
-				  			$(obj).css("cursor",_this.cursor[1]);
-				  			_this.addWH({
-				  				x : ev.clientX,
-				  				obj : obj,
-				  				width : width
-				  			})
-					  	}
-					  	if(ev.offsetX>=width-_this.eMinTriger){ //右边
-					  		$(obj).css("cursor",_this.cursor[1])
-					  		_this.addWH({
-				  				x : ev.clientX,
-				  				obj : obj,
-				  				width : width
-				  			})
-					  	}	
-					  	if(ev.offsetY<=_this.eMinTriger){ //上边
-					  		$(obj).css("cursor",_this.cursor[0])
-					  		_this.addWH({
-				  				y : ev.clientY,
-				  				obj : obj,
-				  				width : width
-				  			})
-					  		
-					  	}
-					  	if(ev.offsetY>=height-_this.eMinTriger){ //下边
-					  		$(obj).css("cursor",_this.cursor[0])
-					  		_this.addWH({
-				  				y : ev.clientY,
-				  				obj : obj,
-				  				width : width
-				  			})
-					  		
-					  	}
-				  	}
-			});
-		}
-		_this.addWH = function(json){
-			$(json.obj).mousedown(function(ev){
-				var x_X = ev.clientX;
-				var y_Y = ev.clientY;
-
-				$(json.obj).unbind();
-				$(document).mousemove(function(ev){
-					$(json.obj).css("width",(ev.clientX-json.x+json.width+1+"px"))
-					
-					
 				
-					
-				
-					
 				})
-				$(document).mouseup(function(){
-					$(document).unbind();
-					document.onmousemove = null;
-					document.onmouseup = null;
-					ppt.dragScale(json.obj);
-
-				})
-			})
-			
-			
+			})			
 		}
-
 
 		_this.ABS = function(num){  //绝对值
 			
@@ -268,12 +208,10 @@
 			else
 				return num;
 		}
+			
+	};	 //ppt ending---
 		
-		
-		
-	}	
-		
-	ppt_edit.prototype.drag = function(obj){ //拖动工具栏
+	ppt_edit.prototype.drag = function(obj){ //拖动改变鼠标
 		return (function(){
 			$(obj).mousemove(function(ev){
 
@@ -289,26 +227,22 @@
 	}
 	//拖动函数
 	ppt_edit.prototype.moveEle = function(obj){
-		_this.dragScale(obj);
+		_this.drag(obj);
 		var left,top,x,y;
 		return (function(){
-
 			$(obj).mousedown(function(ev){
-
 				x = ev.clientX;
 				y = ev.clientY;
 				left = $(obj).offset().left;
 				top = $(obj).offset().top;
-				if(ev.clientY-$(obj).offset().top<=_this.eMinTriger*2){
+				if(ev.clientY - $(obj).offset().top <= _this.eMinTriger * 2){
 					$(document).mousemove(function(ev){
-
 						$(obj).css("left",left+(ev.clientX - x)+'px');
 						$(obj).css("top",top+(ev.clientY - y)+'px');
 					})
 					$(document).mouseup(function(){
-						$(document).unbind();
-						document.onmousemove = null;
-						document.onmouseup = null;
+						$(document).unbind("mousemove");
+						$(document).unbind("mouseup");
 					})
 				}
 			})
@@ -318,15 +252,95 @@
 	ppt_edit.prototype.clickInnerNone = function(fn){
 		var result;
 		return function(){
-
 			return (result || (result = fn.apply(this,arguments)));
-			
 		}
 	}
-	
+	//down move up 
+	ppt_edit.prototype.downMoveUp = function(obj,fn1,fn2,fn3){
+		var _this = this;
+		return function(){
+			$(obj).mousedown(function(ev){
+				if(fn1)
+					var json = fn1.apply(_this,arguments); 
+				$(document).mousemove(function(ev){
+					Array.prototype.push.call(arguments,json); //将fn1返回的参数放到arguments里面
+					if(fn2)
+						fn2.apply(_this,arguments);
+				})
+				$(document).mouseup(function(ev){
+					$(document).unbind("mousemove");
+					$(document).unbind("mouseup");
+					if(fn3)
+						fn3.apply(_this,arguments); 
+				})
+			})	
+		};
+		
+	}
+	ppt_edit.prototype.colorChoose = function(obj){
+		
+		var ctx =document.getElementById('canvas').getContext("2d");
+		var circle; //选中圆圈
+
+		var drawImgAndred = function(){
+			ctx.fillStyle="red";
+			ctx.fillRect(0,0,150,150);
+			alert(1);
+			var img = document.getElementById('clImg');
+			ctx.drawImage(img,0,0);
+		}
+		setTimeout(function(){
+			drawImgAndred();	
+		},300)
+		
+		var drawCircle = function(x,y){
+
+			ctx.beginPath();
+			ctx.clearRect(0,0,150,150);
+			drawImgAndred();
+			ctx.arc(x - $(obj).offset().left,y - $(obj).offset().top,5,0,2*Math.PI);
+			ctx.stroke();
+			
+		}
+		//ctx.getImageData(x,y,w,h)
+		var fn1 = function(){
+			var ev = arguments[0];
+			return (function(){
+				drawCircle(ev.clientX,ev.clientY);
+				return {
+					x : ev.clientX,
+					y : ev.clientY,
+					left : $(obj).offset().left,
+					top : $(obj).offset().top
+				}	
+			})();
+			
+			
+			
+		}
+		var fn2 = function(){
+			var ev = arguments[0];
+			ctx.beginPath();
+			
+			drawImgAndred();
+			ctx.arc(ev.clientX - $(obj).offset().left,ev.clientY - $(obj).offset().top,5,0,2*Math.PI); 
+			ctx.stroke();
+			
+				//var imgDate = ctx.getImageData(ev.clientX - $(obj).offset().left,ev.clientY - $(obj).offset().top,5,5);
+			var imgDate = ctx.getImageData(10,10,150,150);
+			//var rgb = "rgb("+imgDate.data[4]+","+imgDate.data[5]+","+imgDate.data[6]+")";
+			
+			
+				console.log(imgDate.data)
+			
+			
+
+		}
+		var move = new _this.downMoveUp(obj,fn1,fn2);
+		move();
+	}
 	ppt_edit.prototype.borderNone = function(obj){
 		obj.blur(function(){
-			
 			if(obj.val()===''){
 				obj.css("border","1px dotted blue");
 			}
@@ -385,14 +399,6 @@ ppt_edit.prototype.colorTable = function(canvas){
 	var ppt = new ppt_edit();
 	ppt.init();
 	ppt.colorTable(document.getElementById('canvas'));
-
-	
-
-
-		
-	}
-	var ppt = new ppt_edit();
-	ppt.dragScale('#targer');
-	ppt.dragScale('#targer2');
+	ppt.colorChoose("#canvas")
 })(window);
 /**/

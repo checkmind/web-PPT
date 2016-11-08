@@ -154,9 +154,8 @@ section,.page{
 
 .colorTable .canvas{
 	position: absolute;
-	background-image:url(../image/colorpicker_overlay.png);
 	background-size: cover;
-	background-color:red;
+	
 	left: 0;
 	top:.12rem;
 }
