@@ -67,6 +67,8 @@
 			_this.dragScale("#navRight");
 			_this.dragScale("#e0");
 			_this.dragScale("#e1");
+			/*******intit tool******/
+			_this.toolRunFun();
 
 		}
 		_this.addEleStyle = function(json){ //type: text/attr/block/animate   增加属性 函数
@@ -248,8 +250,9 @@
 			})
 		})();
 	}
-	//惰性单例
-	ppt_edit.prototype.clickInnerNone = function(fn){
+	/**********************common function*****************/
+	//fn run once
+	ppt_edit.prototype.single = function(fn){
 		var result;
 		return function(){
 			return (result || (result = fn.apply(this,arguments)));
@@ -277,67 +280,34 @@
 		};
 		
 	}
-	ppt_edit.prototype.colorChoose = function(obj){
+	// add cover all
+	ppt_edit.prototype.addCover = function(fn1){
+		var _this = this;
+		return (function(){
+			var fn = function(){  //add cover
+				var div = document.createElement("div");
+				div.id = "cover";
+				document.body.appendChild(div);
+				$("#cover").css({
+					"position":"fixed",
+					"width"  :"100%",
+					"height" : "100%",
+					"top" : "0",
+					"background" : "black",
+					"opacity" : "0"
+				})
+				return div;
+			}
+			var add = _this.single(fn);
+			if(add()){  //click to close cover and run fn1
+				$("#cover").click(function(){
+					$(this).css("display","none");
+					return fn1.apply(_this,arguments);
+				})
+				$("#cover").css("display","block");
+			}
+		})();
 		
-		var ctx =document.getElementById('canvas').getContext("2d");
-		var circle; //选中圆圈
-
-		var drawImgAndred = function(){
-			ctx.fillStyle="red";
-			ctx.fillRect(0,0,150,150);
-			alert(1);
-			var img = document.getElementById('clImg');
-			ctx.drawImage(img,0,0);
-		}
-		setTimeout(function(){
-			drawImgAndred();	
-		},300)
-		
-		var drawCircle = function(x,y){
-
-			ctx.beginPath();
-			ctx.clearRect(0,0,150,150);
-			drawImgAndred();
-			ctx.arc(x - $(obj).offset().left,y - $(obj).offset().top,5,0,2*Math.PI);
-			ctx.stroke();
-			
-		}
-		//ctx.getImageData(x,y,w,h)
-		var fn1 = function(){
-			var ev = arguments[0];
-			return (function(){
-				drawCircle(ev.clientX,ev.clientY);
-				return {
-					x : ev.clientX,
-					y : ev.clientY,
-					left : $(obj).offset().left,
-					top : $(obj).offset().top
-				}	
-			})();
-			
-			
-			
-		}
-		var fn2 = function(){
-			var ev = arguments[0];
-			ctx.beginPath();
-			
-			drawImgAndred();
-			ctx.arc(ev.clientX - $(obj).offset().left,ev.clientY - $(obj).offset().top,5,0,2*Math.PI); 
-			ctx.stroke();
-			
-				//var imgDate = ctx.getImageData(ev.clientX - $(obj).offset().left,ev.clientY - $(obj).offset().top,5,5);
-			var imgDate = ctx.getImageData(10,10,150,150);
-			//var rgb = "rgb("+imgDate.data[4]+","+imgDate.data[5]+","+imgDate.data[6]+")";
-			
-			
-				console.log(imgDate.data)
-			
-			
-
-		}
-		var move = new _this.downMoveUp(obj,fn1,fn2);
-		move();
 	}
 	ppt_edit.prototype.borderNone = function(obj){
 		obj.blur(function(){
@@ -357,8 +327,58 @@
 			}
 		})
 	}
-/*************菜单栏***************/
-	ppt_edit.prototype.addlistFun = function(){  //增加文本框
+	//draw canvas to choose color
+	ppt_edit.prototype.colorChoose = function(obj){ 
+		
+		var ctx =document.getElementById('canvas').getContext("2d");
+		var circle; 
+		
+		
+		var drawImgAndred = function(){ //画底色和填充图片
+			ctx.fillStyle="red";
+			ctx.fillRect(0,0,150,150);
+			var img = document.getElementById('clImg');
+			ctx.drawImage(img,0,0);
+		}
+		
+		drawImgAndred();	
+		
+		
+		var drawCircle = function(x,y){ //画圆圈
+			ctx.beginPath();
+			ctx.clearRect(0,0,150,150);
+			drawImgAndred();
+			ctx.arc(x - $(obj).offset().left,y - $(obj).offset().top,5,0,2*Math.PI);
+			ctx.stroke();
+		}
+		var fn1 = function(){ // mousedown fn
+			var ev = arguments[0];
+			return (function(){
+				drawCircle(ev.clientX,ev.clientY);
+				return {
+					x : ev.clientX,
+					y : ev.clientY,
+					left : $(obj).offset().left,
+					top : $(obj).offset().top
+				}	
+			})();
+		}
+		var fn2 = function(){ // mousemove fn
+			var ev = arguments[0];
+			ctx.beginPath();
+			drawImgAndred();
+			ctx.arc(ev.clientX - $(obj).offset().left,ev.clientY - $(obj).offset().top,5,0,2*Math.PI); 
+			ctx.stroke();
+			var imgDate = ctx.getImageData(ev.clientX - $(obj).offset().left,ev.clientY - $(obj).offset().top,1,1);
+			var rgb = "rgb("+imgDate.data[4]+","+imgDate.data[5]+","+imgDate.data[6]+")";
+			$(".fontColors").css("background",rgb);
+
+		}
+		var move = new _this.downMoveUp(obj,fn1,fn2);
+		move();
+	}
+/*************meau list***************/
+	ppt_edit.prototype.addlistFun = function(){  //add textarea
 		return (function(){
 			//插入fun
 			$(".insert>a:eq(0)").click(function(){
@@ -370,35 +390,43 @@
 			})
 		})();
 	}
-/***************工具栏*****************/
-ppt_edit.prototype.colorTable = function(canvas){
-	var w = 230, h = 125,r = [],g = [],b = [];
-	return (function(){
-		var ctx = canvas.getContext("2d");
-		var imgDate = ctx.createImageData(w,h);
-		console.log(imgDate.data.length)
-		//getImageData(x,y,w,h);
-		for(var i = 0 ;i<255;i+=50)
-			for(var j = 0;j<255;j+=50)
-				for(var k = 0;k<255;k+=50){
-					r.push(i);
-					g.push(i);
-					b.push(k);
-				}
-		
-		for(var i = 0,j=5; i<imgDate.data.length; i+=4){
+/***************toll list*****************/
+ppt_edit.prototype.toolFun = {  	//tool singletons
 
-			imgDate.data[i] = r[i];
-			imgDate.data[i+1] = g[i];
-			imgDate.data[i+2] = b[i];
-			imgDate.data[i+3] = 255;
-		}
-		
-	})();
+
 }
+ppt_edit.prototype.toolRunFun = function(){
+	 
+	_this.toolFun.clickColor();
+	_this.toolFun.tTextAlign();
+}
+ppt_edit.prototype.toolFun.clickColor = function(){ //choose color
+	var fn = function(){
+		$("#canvas").css("display","none");
+	}
+	$(".fontColors").click(function(){
+		$("#canvas").css("display","block");
+		_this.colorChoose("#canvas");
+		_this.addCover(fn);
+
+	})
+}
+ppt_edit.prototype.toolFun.tTextAlign = function(){
+	var a;
+	
+	for(var i = 0;i<$(".tTextAlign>a").length;i++){
+		
+		(function(i){
+			$(".tTextAlign>a:eq("+i+")").click(function(){
+				alert(i)
+			})	
+		})(i);
+	}
+	
+}
+/**********************ending...*************************/
 	var ppt = new ppt_edit();
 	ppt.init();
-	ppt.colorTable(document.getElementById('canvas'));
-	ppt.colorChoose("#canvas")
+	
 })(window);
 /**/
