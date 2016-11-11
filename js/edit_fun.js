@@ -7,7 +7,7 @@
 		_this.rem = _this.width / 3;
 		_this.pageNum = 1; //总页数
 		_this.pageNow = 0; //当前页数
-		_this.id = 0; //当前id
+		_this.nowId = 0; //当前id
 		_this.MaxId = 1; //当前最大id
 		_this.sectionObj = [{
 			"parameter" : {
@@ -311,6 +311,7 @@
 	}
 	ppt_edit.prototype.borderNone = function(obj){
 		obj.blur(function(){
+			_this.nowId = obj.attr("id") //设置当前id
 			if(obj.val()===''){
 				obj.css("border","1px dotted blue");
 			}
@@ -392,11 +393,11 @@
 	}
 /***************toll list*****************/
 ppt_edit.prototype.toolFun = {  	//tool singletons
-
+	fontFamilyArr : ["Microsoft YaHei","黑体","宋体","楷体","Serif","Sans-serif","Monospace","Cursive","Fantasy"]
 
 }
 ppt_edit.prototype.toolRunFun = function(){
-	 
+	 _this.toolFun.fontFamily();
 	_this.toolFun.clickColor();
 	_this.toolFun.tTextAlign();
 }
@@ -411,18 +412,33 @@ ppt_edit.prototype.toolFun.clickColor = function(){ //choose color
 
 	})
 }
-ppt_edit.prototype.toolFun.tTextAlign = function(){
-	var a;
+ppt_edit.prototype.toolFun.tTextAlign = function(){ //textalign fun
+	var a = ['left',"center",'right'];
 	
 	for(var i = 0;i<$(".tTextAlign>a").length;i++){
 		
 		(function(i){
 			$(".tTextAlign>a:eq("+i+")").click(function(){
-				alert(i)
+				$("#"+_this.nowId).css("text-align",a[i]);
 			})	
 		})(i);
 	}
-	
+}
+ppt_edit.prototype.toolFun.fontFamily = function(){
+	var addFamily = function(arr,obj){
+
+		var str = '',
+			Arr;
+		return (function(){
+			
+			for(var i = 0; Arr = arr[i++];){
+				str += "<li><a href='#'>"+Arr+"</a></li>";
+			}
+
+			$(obj).html(str);
+		})(arr,obj);
+	}
+	addFamily(_this.toolFun.fontFamilyArr,".fontFamily");
 }
 /**********************ending...*************************/
 	var ppt = new ppt_edit();
