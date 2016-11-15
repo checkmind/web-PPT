@@ -119,8 +119,8 @@
 
 
 <div class ="navTool">
-	<span>文字对齐方式:</span>
-	<div class="tTextAlign" >
+	<label>文字对齐方式:</label>
+	<div class="tTextAlign label-r" >
 		<a href="javascript:;" title="向左对齐">
 			<span class="glyphicon glyphicon-align-left"></span>
 		</a>
@@ -130,27 +130,27 @@
 		<a href="javascript:;" title="向右对齐">
 			<span class="glyphicon glyphicon-align-right"></span>
 		</a>
-	|</div>
+	</div>
+	<br/>
 	
-	
-	<span> 字体类型:</span>
-	<div class="btn-group">
+	<label> 字体类型：</label>
+	<div class="btn-group label-r">
 		<button type="button" class="btn btn-default dropdown-toggle" 
-				data-toggle="dropdown">
+				data-toggle="dropdown" id="toolFontFamily">
 			默认 <span class="caret"></span>
 		</button>
 		<ul class="dropdown-menu fontFamily" role="menu">
 			
 		</ul>
 	</div>
-	|
-	<span> 字体大小:</span>
-	<div class="btn-group">
+	<br/>
+	<label> 字体大小：</label>
+	<div class="btn-group label-r" style="display:none;">
 		<button type="button" class="btn btn-default dropdown-toggle" 
-				data-toggle="dropdown">
+				data-toggle="dropdown" id="toolFontSize">
 			默认 <span class="caret"></span>
 		</button>
-		<ul class="dropdown-menu" role="menu" >
+		<ul class="dropdown-menu fontSize" role="menu" >
 			<li><a href="#">功能</a></li>
 			<li><a href="#">另一个功能</a></li>
 			<li><a href="#">其他</a></li>
@@ -158,15 +158,32 @@
 			<li><a href="#">分离的链接</a></li>
 		</ul>
 	</div>
-	|
-	<span> 字体颜色:</span>
-	<div class="fColorBody">
+	<div class="label-r">
+		<div class="barPro">
+			<div class="barPro_2"></div>
+			<div class="fontCursor"></div>
+		</div>
+		<span>12px</span>
+
+	</div>
+	<br/>
+	<label> 字体颜色：</label>
+	<div class="fColorBody label-r" >
 		<button class="fontColors"></button>
 		<div class="colorTable">
 			<img src="image/back.png" id="clImg" style="display:none">
 			<canvas width="150" height="150" id="canvas" class="canvas"></canvas>
 		</div>
 	</div>
+	
+	<br/>
+
+	
+    	<label>有无边框：</label>
+    	<div class="label-r">
+      	 	<input type="checkbox" id="borderOnOff">   
+    	</div>
+ 	 
 </div>
 
 		

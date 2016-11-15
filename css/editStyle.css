@@ -42,9 +42,7 @@ section,.page{
 	display: block;
 	opacity: .9;
 }
-#navRight:hover{
-	opacity: 1;
-}
+
 #navCenter{
 	width:100%;
 	height: auto;
@@ -101,6 +99,8 @@ section,.page{
 
 
 .navTool{
+	width: 20%;
+	height: auto;
 	line-height: .1rem;
 	position: fixed;
 	left: .05rem;
@@ -115,9 +115,7 @@ section,.page{
 	padding-right: .02rem;
 	font-size: .01rem;
 }
-.navTool:hover{
-	opacity: 1;
-}
+
 
 .navTool div{
 	display: inline-block;
@@ -130,8 +128,52 @@ section,.page{
 .navTool a:hover{
 	color: white;
 }
-.navTool button{
+.navTool .btn{
 	font-size: .01rem;
+	float: none;
+   	margin:0 auto;
+}
+.navTool input{
+	 display: table-cell;
+    vertical-align: middle;
+   	margin:0 auto;
+}
+.navTool label{
+	width: 30%;
+	text-align: right;
+}
+.navTool .label-r{
+	width: 60%;
+	text-align: center;
+}
+.navTool .barPro{
+	width: 130px;
+	background:#d9edf7;
+	border-radius: 10px;
+	height: 10px;
+	display: inline-block;
+	position: relative;
+	line-height: .1rem;
+	overflow: hidden;
+}
+.navTool .barPro .barPro_2{
+	position: absolute;
+	left: 0px;
+	width: 0%;
+	height: 100%;
+	background:#618ee4;
+	top:0px;
+	
+}
+.navTool .barPro .fontCursor{
+	width: 10px;
+	height:10px;
+	background:#f11410;
+	left:0%;
+	top:0%;
+	position: absolute;
+	border-radius: 50%;
+	cursor: pointer;	
 }
 .navTool .fontColors{
 	width: .07rem;

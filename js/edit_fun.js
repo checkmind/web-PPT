@@ -7,7 +7,7 @@
 		_this.rem = _this.width / 3;
 		_this.pageNum = 1; //总页数
 		_this.pageNow = 0; //当前页数
-		_this.nowId = 0; //当前id
+		_this.nowId; //当前id
 		_this.MaxId = 1; //当前最大id
 		_this.sectionObj = [{
 			"parameter" : {
@@ -71,7 +71,17 @@
 			_this.toolRunFun();
 
 		}
+		/*
+			_this.addEleStyle({
+					class : $(this).attr("id"), //第几个节点
+					type : "attr",
+					name : "value",
+					str : $(this).val()
+			})
+		*/
 		_this.addEleStyle = function(json){ //type: text/attr/block/animate   增加属性 函数
+			if(!json.class)
+				return false;
 			var fun = {
 				"text" : function(){
 					obj.val(json.str);
@@ -281,11 +291,8 @@
 		
 	}
 	// add cover all
-	ppt_edit.prototype.addCover = function(fn1){
-		var _this = this;
-		return (function(){
-			var fn = function(){  //add cover
-				var div = document.createElement("div");
+	ppt_edit.prototype.fillConver = function(){
+		var div = document.createElement("div");
 				div.id = "cover";
 				document.body.appendChild(div);
 				$("#cover").css({
@@ -296,14 +303,24 @@
 					"background" : "black",
 					"opacity" : "0"
 				})
-				return div;
-			}
-			var add = _this.single(fn);
-			if(add()){  //click to close cover and run fn1
-				$("#cover").click(function(){
-					$(this).css("display","none");
-					return fn1.apply(_this,arguments);
-				})
+		return div;
+
+	}
+	var addFillConver = ppt_edit.prototype.single(ppt_edit.prototype.fillConver);
+	ppt_edit.prototype.addCover = function(fn1){
+
+		var _this = this;
+		return (function(){
+
+			if(addFillConver()){  //click to close cover and run fn1
+					var clickCover = _this.single(function(){
+						$("#cover").one("click",function(){
+							$(this).css("display","none");
+							return fn1.apply(_this,arguments);	
+						})	
+						return;
+					})
+					clickCover();	
 				$("#cover").css("display","block");
 			}
 		})();
@@ -320,7 +337,7 @@
 				
 				_this.addEleStyle({
 					class : $(this).attr("id"), //第几个节点
-					type : "block",
+					type : "attr",
 					name : "value",
 					str : $(this).val()
 			})
@@ -329,13 +346,19 @@
 		})
 	}
 	//draw canvas to choose color
+	/*
+	colorChoose({
+		id : id,
+		fontColors : fontColors, //the color view
+		style : style  		//which style should be fill
+	})
+	*/
 	ppt_edit.prototype.colorChoose = function(obj){ 
 		
 		var ctx =document.getElementById('canvas').getContext("2d");
 		var circle; 
 		
-		
-		var drawImgAndred = function(){ //画底色和填充图片
+		var drawImgAndred = function(){ 		// draw color and fill img to canvas
 			ctx.fillStyle="red";
 			ctx.fillRect(0,0,150,150);
 			var img = document.getElementById('clImg');
@@ -343,24 +366,31 @@
 		}
 		
 		drawImgAndred();	
+		var fillEleCl = function(ev){
+			var imgDate = ctx.getImageData(ev.clientX - $(obj.id).offset().left,ev.clientY - $(obj.id).offset().top,1,1);
+			var rgb = "rgb("+imgDate.data[4]+","+imgDate.data[5]+","+imgDate.data[6]+")";
+			$(obj.fontColors).css("background",rgb);
+			$("#"+_this.nowId).css(obj.style,rgb);
+		}
 		
-		
-		var drawCircle = function(x,y){ //画圆圈
+		var drawCircle = function(x,y){ 
 			ctx.beginPath();
 			ctx.clearRect(0,0,150,150);
 			drawImgAndred();
-			ctx.arc(x - $(obj).offset().left,y - $(obj).offset().top,5,0,2*Math.PI);
+			ctx.arc(x - $(obj.id).offset().left,y - $(obj.id).offset().top,5,0,2*Math.PI);
 			ctx.stroke();
 		}
+
 		var fn1 = function(){ // mousedown fn
 			var ev = arguments[0];
 			return (function(){
 				drawCircle(ev.clientX,ev.clientY);
+				fillEleCl(ev);
 				return {
 					x : ev.clientX,
 					y : ev.clientY,
-					left : $(obj).offset().left,
-					top : $(obj).offset().top
+					left : $(obj.id).offset().left,
+					top : $(obj.id).offset().top
 				}	
 			})();
 		}
@@ -368,14 +398,11 @@
 			var ev = arguments[0];
 			ctx.beginPath();
 			drawImgAndred();
-			ctx.arc(ev.clientX - $(obj).offset().left,ev.clientY - $(obj).offset().top,5,0,2*Math.PI); 
+			ctx.arc(ev.clientX - $(obj.id).offset().left,ev.clientY - $(obj.id).offset().top,5,0,2*Math.PI); 
 			ctx.stroke();
-			var imgDate = ctx.getImageData(ev.clientX - $(obj).offset().left,ev.clientY - $(obj).offset().top,1,1);
-			var rgb = "rgb("+imgDate.data[4]+","+imgDate.data[5]+","+imgDate.data[6]+")";
-			$(".fontColors").css("background",rgb);
-
+			fillEleCl(ev);
 		}
-		var move = new _this.downMoveUp(obj,fn1,fn2);
+		var move = new _this.downMoveUp(obj.id,fn1,fn2);
 		move();
 	}
 /*************meau list***************/
@@ -393,25 +420,82 @@
 	}
 /***************toll list*****************/
 ppt_edit.prototype.toolFun = {  	//tool singletons
-	fontFamilyArr : ["Microsoft YaHei","黑体","宋体","楷体","Serif","Sans-serif","Monospace","Cursive","Fantasy"]
+	fontFamilyArr : ["Microsoft YaHei","黑体","宋体","楷体","Serif","Sans-serif","Monospace","Cursive","Fantasy"], // font family
+	fontSize : function(num,para){ //fontSize arr
+		var arr = [];
+		return (function(){
+			for(var i = 16; i<=num; i+=para){
+				arr.push(i+'px');	
+			}
+			return arr;
+		})();
+	}
 
 }
 ppt_edit.prototype.toolRunFun = function(){
-	 _this.toolFun.fontFamily();
+	_this.toolFun.fontStyle();
 	_this.toolFun.clickColor();
 	_this.toolFun.tTextAlign();
+	_this.toolFun.tTextSize();
 }
 ppt_edit.prototype.toolFun.clickColor = function(){ //choose color
 	var fn = function(){
 		$("#canvas").css("display","none");
+		_this.addEleStyle({  						//add style to json
+			class : $("#"+_this.nowId).attr("id"), 
+			type : "block",
+			name : "color",
+			str : $(".fontColors").css("background-color")
+		})
 	}
-	$(".fontColors").click(function(){
+	var changeStyle = function(){
 		$("#canvas").css("display","block");
-		_this.colorChoose("#canvas");
+		_this.colorChoose({
+			id : "#canvas",
+			fontColors : ".fontColors", //the color view
+			style : "color"  		//which style should be fill
+		})
 		_this.addCover(fn);
-
-	})
+	}
+	$(".fontColors").click(changeStyle);
 }
+ppt_edit.prototype.toolFun.tTextSize = function(){
+	var bar = 1; //one size have this px
+	var maxLength = $(".barPro").width()-10;
+	var fn1 = function(){
+		var ev = arguments[0];
+		var left = $(".fontCursor").position().left;
+		console.log(ev.offsetX)
+		if(left>=120) //超出范围
+			return;
+		return {
+			left : left,
+			ev : ev.clientX
+		};
+	}
+	var fn2 = function(){
+		var ev = arguments[0];
+		var obj = arguments[1];
+		var left = $(".fontCursor").position().left;
+		if(ev.clientX - obj.ev > 0){ //if trun right add px
+			if(left >= maxLength)
+				return;
+			console.log(left,maxLength)
+			$(".fontCursor").css('left',left + bar);
+		}else{
+			if(left <= 0)
+				return;
+			console.log('l')
+			$(".fontCursor").css('left',left - bar);
+		}
+		obj.ev = ev.clientX;
+	}
+	var fn3 = function(){
+		console.log(arguments);
+	}
+	var moveCursor = _this.downMoveUp(".fontCursor",fn1,fn2,fn3);
+	moveCursor();
+} 
 ppt_edit.prototype.toolFun.tTextAlign = function(){ //textalign fun
 	var a = ['left',"center",'right'];
 	
@@ -419,26 +503,85 @@ ppt_edit.prototype.toolFun.tTextAlign = function(){ //textalign fun
 		
 		(function(i){
 			$(".tTextAlign>a:eq("+i+")").click(function(){
+
 				$("#"+_this.nowId).css("text-align",a[i]);
+
+				_this.addEleStyle({  //add style to json
+					class : $("#"+_this.nowId).attr("id"), 
+					type : "block",
+					name : "text-align",
+					str : a[i]
+				})
 			})	
 		})(i);
 	}
+
 }
-ppt_edit.prototype.toolFun.fontFamily = function(){
-	var addFamily = function(arr,obj){
 
-		var str = '',
-			Arr;
-		return (function(){
+ppt_edit.prototype.toolFun.fontStyle = function(){ //to add font family
+	var objFun = {
+		addStyle : function(obj){
 			
-			for(var i = 0; Arr = arr[i++];){
-				str += "<li><a href='#'>"+Arr+"</a></li>";
-			}
+			var str = '',
+			Arr;
+			return (function(){
+				
+				
+				for(var i= 0; i< obj.arr.length;i++){
+					str += "<li><a href='#'>"+obj.arr[i]+"</a></li>";
 
-			$(obj).html(str);
-		})(arr,obj);
+				}
+				$(obj.put).html(str);
+				console.log(1);
+				objFun.bindLi({
+					arr : obj.arr,
+					liArr : obj.put+">li",
+					chage : obj.change,
+					style : obj.style
+				});
+			})();	
+		},
+		bindLi : function(obj){
+			/*
+				obj = {
+					arr,
+					liArr,
+					chage,
+				}
+			*/
+			for(var i = 0; i < $(obj.liArr).length; i++){
+				(function(i){
+					$(obj.liArr+":eq(" + i + ")").click(function(){
+						if(!_this.nowId)
+							return;
+						$(obj.chage).html(obj.arr[i] + "<span class='caret'></span>" );
+						$("#"+_this.nowId).css(obj.style,obj.arr[i]);
+						_this.addEleStyle({
+								class : _this.nowId, 
+								type : "block",
+								name : obj.style,
+								str : obj.arr[i]
+						})
+					});
+					
+				})(i);
+			}
+		}
 	}
-	addFamily(_this.toolFun.fontFamilyArr,".fontFamily");
+	
+	objFun.addStyle({
+		arr : _this.toolFun.fontFamilyArr,
+		put : ".fontFamily",
+		change : "#toolFontFamily",
+		style : "font-family"
+	})
+	
+	
+}
+ppt_edit.prototype.toolFun.borderSet = function(){
+	$("#borderOnOff").click(function(){
+		
+	})
 }
 /**********************ending...*************************/
 	var ppt = new ppt_edit();
