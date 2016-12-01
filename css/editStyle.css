@@ -364,7 +364,6 @@ section,.page{
 }
 /*******loginbody*******/
 .loginBody{
-	
 	width: .8rem;
 	height: .6rem;
 	position: fixed;
@@ -378,6 +377,22 @@ section,.page{
 	display: block;
 	
 	font-size: .02rem;
+}
+.singBody{
+	width: .8rem;
+	height: 1rem;
+	position: fixed;
+	left: 40%;
+	top: .05rem;
+	background:#fff;
+	text-align: center;
+
+	box-shadow: 0 0 6px black;
+	z-index: 999;
+	display: block;
+	
+	font-size: .02rem;
+
 }
 footer{
 	width: 100%;
