@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>web PPT to vistor</title>
+	<title>web PPT to editor</title>
 	<script type="text/javascript">
 	
 		document.getElementsByTagName('html')[0].style.fontSize = document.documentElement.clientWidth/3 + "px";
@@ -18,8 +18,9 @@
 
 <link rel="stylesheet" type="text/css" href="css/page.css">
 
-<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</document.getElementsByTagName('html')[0].style.fontSize>
+<script src="./lib/jquery.min.js"></script>
+<script src="./lib/bootstrap.min.js"></script>
 
 <body>
 
@@ -27,8 +28,8 @@
 <section>
 	
 	<div class="page">
-	<input type="text" id="e0" class="h1"   placeholder="点击添加标题">
-	<input type="text" id="e1"  class="h2" placeholder="点击添加标题"> 
+	<div type="text" id="e0" class="h1 dom"    contentEditable="true">点击添加标题</div>
+	<div type="text" id="e1"  class="h2 dom"  contentEditable="true">点击添加内容</div>
 	 </div>
 
 </section>
@@ -117,8 +118,11 @@
 
 
 
-
-<div class ="navTool">
+<!-- this is navTool for font-->
+<div class ="navTool" style="display:none;">
+	<div class="bdHead">
+ 		<a href="javascript:;"><span class="glyphicon glyphicon-remove"></span></a>
+ 	</div>
 	<label>文字对齐方式:</label>
 	<div class="tTextAlign label-r" >
 		<a href="javascript:;" title="向左对齐">
@@ -145,59 +149,157 @@
 	</div>
 	<br/>
 	<label> 字体大小：</label>
-	<div class="btn-group label-r" style="display:none;">
-		<button type="button" class="btn btn-default dropdown-toggle" 
-				data-toggle="dropdown" id="toolFontSize">
-			默认 <span class="caret"></span>
-		</button>
-		<ul class="dropdown-menu fontSize" role="menu" >
-			<li><a href="#">功能</a></li>
-			<li><a href="#">另一个功能</a></li>
-			<li><a href="#">其他</a></li>
-			<li class="divider"></li>
-			<li><a href="#">分离的链接</a></li>
-		</ul>
-	</div>
+	
 	<div class="label-r">
 		<div class="barPro">
 			<div class="barPro_2"></div>
 			<div class="fontCursor"></div>
 		</div>
-		<span>12px</span>
+		<span id='fontSpan'>15px</span>
 
 	</div>
 	<br/>
 	<label> 字体颜色：</label>
 	<div class="fColorBody label-r" >
 		<button class="fontColors"></button>
-		<div class="colorTable">
-			<img src="image/back.png" id="clImg" style="display:none">
-			<canvas width="150" height="150" id="canvas" class="canvas"></canvas>
+		<div class="colorTable dhCover colorFt">
+		
+			
+		
 		</div>
 	</div>
 	
 	<br/>
-
-	
-    	<label>有无边框：</label>
-    	<div class="label-r">
-      	 	<input type="checkbox" id="borderOnOff">   
-    	</div>
- 	 
+	 
 </div>
 
-		
+	<!-- this is tool table for border-->	
+<div class="toolTable" style="display:none;">
+	<div class="bdHead">
+ 		<a href="javascript:;"><span class="glyphicon glyphicon-remove"></span></a>
+ 	</div>
+ 	 <div class="borderSit">
+ 	 	<li>
+		 	 <span>有无边框：</span>
+				<div class="span-r">
+			  	 	<input type="checkbox" id="borderOnOff">   
+				</div>
+		</li>
+ 	 	<li>
+ 	 		<span>边框样式：</span>
+ 	 		<div class="span-r btn-group">
+ 	 			
+					<button type="button" class="btn btn-default dropdown-toggle" 
+							data-toggle="dropdown" id="toolBorderFamily">
+						默认 <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu borderFamily" role="menu" >
+						
+					</ul>
+				
+	 	 	</div>
 
+				
+ 	 	</li>
+ 	 	<li>
+ 	 		<span>边框颜色：</span>
+ 	 		<div class="span-r">
+	 	 		<button class="borderColors"></button>
+	 	 		<div class="colorBd  colorTable dhCover">
+					
+					
+				</div>
+	 	 	</div>
+ 	 	</li>
+ 	 	<li>
+ 	 		<span>边框圆角：</span>
+ 	 		<div class="span-r">
+ 	 			<div class="radius_li">
+	 		 		上左 : <input type="number" class="borderRadius" /> px ，
+	 		 		上右 : <input type="number" class="borderRadius"/> px
+	 		 	</div>
+	 		 	<div class="radius_li">
+	 		 		<input type="checkbox" id="radius" name='radius'  style="display:none;" checked="" />
+	 		 		<label href="javascript:;" class="touchRadius hover" for='radius'><span class="glyphicon glyphicon-fullscreen"></span></label>
+	 		 		
+	 		 	</div>
+	 		 	<div class="radius_li">
+	 		 		下左 : <input type="number" class="borderRadius"/> px ，
+	 		 		下右 : <input type="number" class="borderRadius"/> px
+	 		 	</div>
+ 	 		</div>
+ 	 	</li>
+ 	 	<li>
+ 	 		<span>边框大小：</span>
+ 	 		<div class="span-r">
+ 	 			<div class="radius_li">
+	 		 		上边 : <input type="number" class="borderSize"/> px ，
+	 		 		下边 : <input type="number" class="borderSize"/> px
+	 		 	</div>
+	 		 	<div class="radius_li">
+	 		 		<input type="checkbox" id="bdSize" name='bdSize'  style="display:none;" checked=""/>
+	 		 		<label href="javascript:;" class="touchbdSize hover" for='bdSize'><span class="glyphicon glyphicon-fullscreen"></span></label>
+	 		 	</div>
+	 		 	<div class="radius_li">
+	 		 		左边 : <input type="number" class="borderSize"/> px ，
+	 		 		右边 : <input type="number" class="borderSize"/> px
+	 		 	</div>
+ 	 		</div>
+ 	 	</li>
+ 	 </div>
+</div>
  
+<!--width height model -->
+<div class="whModle" style="display:block;">
+	<div class="bgHead">
+ 		<a href="javascript:;"><span class="glyphicon glyphicon-remove"></span></a>
+ 	</div>
+ 	<div class="bgBody">
+ 		<li>
+			<span>长度</span>
+			<div class="span-r">
+				宽度： <input type="number" class="boxWidth" /> px
+				高度： <input type="number" class="boxHeight"/> px
+			</div>
+		</li>
+		<li>
+			<span>坐标</span>
+			<div class="span-r">
+				x轴： <input type="number" class="boxX" /> px
+				y轴： <input type="number" class="boxY"/> px
+			</div>
+		</li>
+ 		<li>
+	 		<span>背景颜色</span>
+	 	 		<div class="span-r">
+		 	 		<button class="whBgColors"></button>
+		 	 		<div class="colorBg  bgColorTable dhCover">
+					</div>
+		 	 	</div>
+		</li>
+		<li>
+	 		<span>背景图片</span>
+	 	 		<div class="span-r">
+	 	 		<label href="javascript:;" class="BoxBgFileT" for='boxBgFile'>
+		 	 		上传图片
+		 	 	</label>
+		 	 	<input type="file" class="boxBgFile" id="boxBgFile" style="display: none;" />
+		 	 	</div>
+		</li>
+		
+ 	</div>
+</div>
 
 </body>
 
+<script type="text/javascript" src="js/view.js"></script>
+<script type="text/javascript" src="js/connect.js"></script>
 <script src="js/edit_fun.js"></script>
 
 <script type="text/javascript">
-
+/*
 	   document.onselectstart=function(){return false;} //禁止文本被选中
-	  
+*/	  
 
 </script>
 </html>

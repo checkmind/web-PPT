@@ -1,20 +1,22 @@
 .page{
 	padding:.1rem;
 }
-.page input{
+.page .dom{
 	width: 40%;
-	padding: .1rem;
+	padding: .05rem;
 	left: 30%;
 	top:40%;
 	border:1px dotted blue;
 	font-size: .05rem;
 	display: block;
+		outline: none;
 }
 #e0{
 	font-size: .1rem;
 	top: 5%;
 	width: 80%;
 	left:10%;
+	outline: none;
 }
 #e1{
 	width: 60%;
