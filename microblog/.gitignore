@@ -1,0 +1,8 @@
+S1:      touch  .gitignore     #创建gitignore隱藏文件  
+S2:      vim    .gitignore     #编辑文件，加入指定文件  
+         #下面是我的gitignore文件的内容  
+         #忽略gitignore文件  
+         .gitignore  
+         
+         #显示指定忽略名称为main的文件  
+         node_modules 
