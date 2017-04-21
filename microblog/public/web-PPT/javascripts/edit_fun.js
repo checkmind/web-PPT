@@ -207,11 +207,13 @@
 			}
 		}];
 		*/
+	
 		_this.eleScale = [];
 		_this.init = function(){  //初始化
 			
 			/**************loginOrOut********/
 			connect.loginOrOut(function(){
+
 				/*******connect ***********/
 				connect.addUserList();
 				/*********init muau tool ******/
@@ -2239,10 +2241,10 @@ ppt_edit.prototype.WhToolObj.textAlign = function(){  //居中图片
 /**********************ending...*************************/
 	
 	
-	window.onload = function(){
+	
 		var ppt = new ppt_edit();
 		ppt.init();
 		window.ppt = ppt;
-	}
+	
 })(window);
 /**/
