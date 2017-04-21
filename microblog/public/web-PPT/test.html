@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<style type="text/css">
+	#me{
+		position: absolute;
+		right: 0px;
+		width: 200px;
+		height: 200px;
+		border:1px solid black;
+	}
+</style>
+<script type="text/javascript" src='lib/jquery.min.js'></script>
+<body>
+<div contenteditable="true" id="it"></div>
+<div id="me"></div>
+<button>dsd</button>
+</body>
+<script type="text/javascript">
+	
+	function htmlEncode(value){
+	  return $('<div/>').text(value).html();
+	}
+	$('button').click(function(){
+		html = $('#it').html();
+		console.log($("#me").text(html).html());
+			
+	})
+	
+</script>
+</html>

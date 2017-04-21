@@ -1,0 +1,967 @@
+html,body{
+	width:100%;
+	height: 100%;
+	background:#f7f7f7;
+	position: absolute;
+	top:0;
+	left:0;
+	overflow: hidden;
+	text-align: center;
+	border:0;
+	margin:0;
+	padding: 0;
+}
+.hover:hover{
+	cursor: pointer;
+}
+li{
+	list-style: none;
+}
+
+
+section{
+
+	width: 70%;
+	
+	
+	height: 80%
+	margin:20px auto;
+	position: absolute;
+	bottom: .03rem;
+	right: .3rem;
+	overflow: hidden;
+	
+	box-shadow: 0px 0px 6px black;
+}
+.page{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	overflow: hidden;
+	top: 0px;
+	left:0px;
+	
+}
+
+
+
+#navRight{
+	height: .2rem;
+	width: 100%;
+	position: relative;
+	
+	background:white;
+	
+	box-shadow: 0 0 6px black;
+	z-index: 99;
+	display: block;
+	
+	font-size: .02rem;
+	text-align: left;
+	
+}
+#navRight .bar,.barBody{
+	width: 100%;
+	height: .1rem;
+	position: relative;
+	background:#ececec;
+	
+	padding-left: 30px;
+	padding-right: 30px;
+	display: table;
+}
+#navRight .bar .btnCs{
+	width: auto;
+	height: 100%;
+	margin: 0;
+	border-radius: 0;
+	outline: none;
+	color: black;
+	background: none;
+	display: table-cell;
+	vertical-align: bottom;
+}
+#navRight .bar .btnCs:nth-child(1){
+	background: white;
+}
+.barBody{
+	background: white;
+}
+.barBody .begin,.insert,.border{
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+.barBody .beginCan{
+	display: block;
+	width: auto;
+	line-height: 20px;
+	height: 100%;
+	min-width: 80px;
+	text-align: center;
+	outline: none;
+	border:none;
+	background: none;
+	float: left;
+	font-size: 10px;
+	margin:0 4px 0;
+}
+.barBody .beginCan button{
+	background:none;
+	outline: none;
+	display: table-cell;
+	vertical-align: middle;
+	border:none;
+	border-radius: 0;
+	font-size: 10px;
+}
+.barBody .beginCan .top,.bottom{
+	width: 100%;
+	height: 50%;
+	display: table;
+	font-size: 10px;
+	text-align: center;
+	
+}
+.barBody .beginCan .fStyle{
+	width: .2rem;
+	text-align: center;
+}
+/*
+	
+*/
+.colorBtnCs{
+	width: 20px;
+	height: 150px;
+	position: absolute;
+	top:0px;
+	left: 160px;
+}
+ .colorBtnCs li{
+	width: 18px;
+	height: 18px;
+	margin-top: 3px;
+	border-radius: 2px;
+	border:1px solid #ccc;
+}
+ .colorBtnCs li:hover{
+	cursor: pointer;
+}
+.opacityBar{
+	width: 150px;
+	height: 15px;
+	line-height: 15px;
+	text-align: center;
+	border-radius: 2px;
+	color:#a94442;
+	border:1px solid #ccc;
+	background:-webkit-linear-gradient(left, #e37f7f,#fff);
+	position: relative;
+}
+.opacityBar a{
+	display: block;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	background: white;
+	position: absolute;
+	left: -2.5px;
+	top:-2.5px;
+	box-shadow: 0 0 3px #ccc;
+}
+
+.fStyle_btn{
+	float: left;
+}
+.sizeFamily{
+	height: 200px;
+	overflow: auto;
+}
+.pullR{
+	width: auto;
+	
+	text-align: left;
+}
+.pullR a{
+	width: auto;
+	padding:0;
+}
+.line_l{
+	height: .1rem;
+	display: block;
+	width: 2px;
+	border-right: 1px solid #ccc;
+	float: left;
+	margin:2px;
+}
+.line_All{
+	height: 100%;
+	display: block;
+	width: 2px;
+	border-right: 1px solid #ccc;
+	float: left;
+	margin:2px;
+}
+
+.colb7{
+	margin:0 3px 0;
+}
+.begin .beginCan .fontColor{
+	
+	border-bottom: 1px solid red;
+	padding-bottom: 1px;
+
+	margin:0;
+
+}
+.tTextAlign a{
+	margin-left: 4px;
+}
+.insertText a{
+	margin-left: 4px;
+}
+
+.insert{
+
+}
+.insert .insertUl li{
+	display: block;
+	float: left;
+}
+ .radius_li{
+	line-height: .1rem;
+	width: auto;
+	height: 100%;
+	display: inline;
+	margin:0 4px 0;
+	float: left;
+}
+.border #borderOnOff{
+	width: 15px;
+	height: 15px;
+
+	margin:0;
+	padding: 0;
+
+}
+.bdColor{
+	
+	border-bottom: 1px solid red;
+	padding-bottom: 1px;
+
+	margin:0;
+
+}
+ .borderRadius,.borderSize,.box{
+	width: 40px;
+   text-align: center;
+   
+    background: none;
+    border: none;
+}
+#navCenter{
+	
+	display: inline-block;
+	color: white;
+	text-align: left;
+	width: auto;
+	line-height: 30px;
+
+}
+#navCenter h3{
+	font-size: 1em;
+}
+#navCenter a{
+	display: block;
+	padding: 2px;
+	text-align: center;
+}
+#navCenter a:hover{
+	background:#ccc;
+	color:red;
+}
+#navCenter a div{
+	width: 80%;
+	
+	margin:0 auto;
+	font-size: .05rem;
+	font-size: 1em;
+	margin-top: .02rem;
+}
+#navRight ul{
+	
+	min-width: 20px;
+	list-style: none;
+}
+#navRight li{
+	width: 100%;
+}
+#navCenter .insert,.switch,.back,#navHead,#navBottom{
+	display: inline-block;
+}
+#navCenter .insert,.switch,.back,#navHead,#navBottom button{
+	float: none;
+	line-height: 50px;
+	margin-right: 10px;
+}
+
+#navHead{
+	
+}
+#navHead a:hover{
+	color: white;
+}
+
+
+.pptName{
+	margin-right: 20px;
+	display: inline;
+}
+#navHead #pptName{
+	width: 80px;
+	height: 30px;
+	background: none;
+	border:none;
+	outline: none;
+	text-align: center;
+	padding-bottom:5px; border-bottom:1px solid white;
+}
+.addPage{
+	color: white;
+	
+	float: left;
+}
+.bdHead,.bgHead{
+	text-align: right;
+	width: 100%;
+}
+
+.navTool{
+	height: auto;
+	
+	display: inline;
+}
+
+.navTool button{
+	background:none;
+	
+	outline: none;
+	border:none;
+}
+
+.navTool div{
+	display: inline-block;
+}
+.navTool a{
+	margin:0 .02rem 0 .02rem;
+	display: inline-block;
+}
+.navTool a:hover{
+	color: white;
+}
+
+.navTool .colb7{
+	color: #337ab7;
+}
+.navTool .colb7:hover{
+	color: white;
+}
+ .colswd{
+	text-shadow:5px 3px 3px black;
+}
+.navTool .colswd:hover{
+	text-shadow:5px 3px 3px white;
+}
+.navTool .barPro{
+	width: 115px;
+	background:#d9edf7;
+	border-radius: 10px;
+	height: 10px;
+	display: inline-block;
+	position: relative;
+	line-height: .1rem;
+	overflow: hidden;
+}
+.navTool .barPro .barPro_2{
+	position: absolute;
+	left: 0px;
+	width: 0%;
+	height: 100%;
+	background:#618ee4;
+	top:0px;
+	
+}
+.navTool .barPro .fontCursor{
+	width: 10px;
+	height:10px;
+	background:#f11410;
+	left:0%;
+	top:0%;
+	position: absolute;
+	border-radius: 50%;
+	cursor: pointer;	
+}
+
+
+
+.fColorBody{
+	position: relative;
+	
+	display: table;
+}
+
+.colorTable,.bgColorTable{
+	position: absolute;
+	background-size: cover;
+	z-index: 999;
+	left: 0;
+	top:.06rem;
+}
+
+
+
+.toolTable{
+	position: absolute;
+	float: left;
+	height: auto;
+	width: auto;
+	right: 5px;
+	top: 10%;
+	background:#333;
+	color: white;
+	box-shadow: 0 0 6px black;
+	display: block;
+	font-size: .01rem;
+	text-align: center;
+	overflow: auto;
+	padding:.01rem;
+}
+
+.whModle{
+	
+	color:#333;
+	width: auto;
+	right: 0;
+	bottom: 5%;
+	position: absolute;
+	font-size: .01rem;
+	
+
+}
+.toolTable .borderSit{
+	width: 100%;
+	font-size: 10px;
+	text-align: left;
+}
+
+
+.toolTable .borderSit  .span-r ul{
+	margin: 0 auto;
+}
+.toolTable .borderSit input{
+	width: 40px;
+	color: white;
+	margin:.02rem;
+	background:none;
+	border:none;
+
+}
+.toolTable .borderSit  button{
+	float: none;
+	margin:0 auto;
+}
+.toolTable .borderSit .radius_li{
+	display: block;
+	width: 100%;
+	font-size: 10px;
+	text-align: center;
+}
+			.borderSit .radius_li .touchRadius{
+				color: #7b7b7b;
+				text-decoration:line-through;
+			}
+			#radius:checked + .touchRadius{
+			color: black;
+
+			}
+			.borderSit .radius_li .touchbdSize{
+				color: #7b7b7b;
+				text-decoration:line-through;
+			}
+			#bdSize:checked + .touchbdSize{
+			color: black;
+			
+			}
+.borderSit #borderCanvas{
+	left: 40%;
+	top:.07rem;
+}
+.borderFamily{
+	max-height: 200px;
+	overflow: auto;
+	margin:0 auto;
+	left:25%;
+	top:0.1rem;
+}
+		.bstyle{
+			display: block;
+			width: 100%;
+			height: 4px;
+
+		}
+		span.none {border-style:none;}
+		span.dotted {border-style:dotted;}
+		span.dashed {border-style:dashed;}
+		span.solid {border-style:solid;}
+		span.double {border-style:double;}
+		span.groove {border-style:groove;}
+		span.ridge {border-style:ridge;}
+		span.inset {border-style:inset;}
+		span.outset {border-style:outset;}
+		span.hidden {border-style:hidden;}
+
+.whModle{
+	
+}
+.whModle .bgBody{
+	width: 100%;
+	text-align: left;
+}
+		.bgBody li{
+			list-style: none;
+			display:block;
+			text-align: left;
+			padding:.02rem;
+		}
+		.bgBody li input{
+			width: 40px;
+			
+			margin:.02rem;
+			margin:0 auto;
+			background: transparent;
+			border:none;
+			outline: none;
+
+		}
+		.bgBody li .span-r{
+			width: 100%;
+			text-align: center;
+			position: relative;
+			margin-top: .01rem;
+			
+		}
+		.BoxBgFileT{
+			padding: 0px 10px;
+		    height: 30px;
+		    line-height: 30px;
+		    position: relative;
+		    cursor: pointer;
+		    color: #888;
+		    background: #fafafa;
+		    border: 1px solid #ddd;
+		    border-radius: 4px;
+		    display: inline-block;
+		    font-size: .01rem;
+		}
+		.BoxBgFileT:hover {
+    color: #444;
+    background: #eee;
+    border-color: #ccc;
+    text-decoration: none
+}
+/******pageGOto ********/
+.pageGoTo{
+	display: none;
+}
+.pageGoToFns{
+	
+	height: 1.2rem;
+	position: fixed;
+	top: .3rem;
+	left:10px;
+	box-shadow: 1px 1px 1px #ccc;
+	border:1px solid #ccc;
+	transform-origin:0 0;
+	transform:scale(.2);
+	overflow: auto;
+	direction:rtl;
+	overflow-x:hidden;
+	box-sizing: border-box;
+	z-index: 0;
+}
+.pageGoTo::-webkit-scrollbar {    width: 12px;}
+.pageGoTo::-webkit-scrollbar-thumb {  
+  border-radius: 0;
+  background: #ccc;
+  -webkit-box-shadow: 0 0 6px #ccc;
+}
+.pageGoTo .cPage{
+	width: 100%;
+	height: 80px;
+	margin:2px;
+	padding:10px;
+	position: relative;
+	overflow: hidden;
+	border:1px solid black;
+	
+}
+.pageGoTo .cPage .pageSm{
+	width: 100%;
+	height: 100%;
+	
+}
+.pageGoTo .cPage:hover{
+	cursor: pointer;
+	
+	box-shadow: 0 0 6px red;
+}
+/*******loginbody*******/
+.loginBody,.singBody{
+	width: 400px;
+	height: 300px;
+	position: fixed;
+	left: 50%;
+	margin-left: -200px;
+	top: 50%;
+	margin-top: -200px;
+	background:#fff;
+	text-align: center;
+	box-shadow: 0 0 6px black;
+	z-index: 999;
+	display: block;
+	
+	font-size: .02rem;
+}
+.singBody{
+
+	height: 500px;
+
+}
+.singLoginHead{
+	width: 100%;
+	height: 48px;
+	line-height: 40px;
+	font-size: 20px;
+	background:#f7f7f7;
+	border-bottom: 1px solid #ccc;
+}
+.singLoginInput{
+	width: 350px;
+	height: 40px;
+	margin:10px auto;
+	border:1px solid #dddddd;
+	font-size: 15px;
+}
+.padLeft20{
+	padding-left: 28px;
+	background:url(../image/input_icons_24_2764534.png) no-repeat;
+}
+.positionY100{
+	background-position: 0 -100px;
+}
+.positionY180{
+	background-position: 0 -180px;
+}
+#login{
+	background: #3f89ec;
+	color:white;
+}
+li #closeLB{
+	float: right;
+	margin-right: 5px;
+}
+
+/***singBody ***
+.singBody{
+	width: 300px;
+	height: 400px;
+	position: fixed;
+	left: 50%;
+	margin-left: -150px;
+	top: 50%;
+	margin-top: -150px;
+	
+	background:#fff;
+	text-align: center;
+	padding:5px;
+	box-shadow: 0 0 6px black;
+	z-index: 999;
+	display: block;
+	
+	font-size: .02rem;
+
+}*/
+li #closeSB{
+	float: right;
+}
+.myPPTList{
+	width: 100%;
+	height: 70%;
+	background:#f7f7f7;
+	position: absolute;
+	bottom: -70%;
+	font-size: 10px;
+	text-align: left;
+	box-shadow: 0 0 6px black;
+
+}
+.myPPThead{
+	width: 100%;
+	height: 10%;
+	float: left;
+	text-align: center;
+	padding-left: 30px;
+	padding-right: 30px;
+	box-shadow: 0 0 10px #ccc;
+	position: relative;
+	line-height: .1rem;
+}
+.myPPThead h3{
+	float: left;
+	font-size: .03rem;
+}
+.myPPThead #refresh,#close{
+	float: right;
+	position: absolute;
+	top: 0px;
+}
+	#refresh{
+		right: 60px;
+	}
+	#close{
+		right: 40px;
+	}
+
+	.sortPPT,.sort{
+		
+		display: inline;
+	}
+.myPPTbody{
+	width: 100%;
+	height: 80%;
+	overflow: auto;
+	float: left;
+}
+.myPPTbody h3{
+	border-bottom:1px solid #ccc;
+	padding-bottom: 20px;
+}
+.myPPTbody .PPTlistBody{
+	width: 100%;
+	height: auto;
+	text-align: center;
+}
+.PPTlistBody .pList{
+	position: relative;
+	display: inline-block;
+	margin-top: 30px;
+	text-align: center;
+	overflow: hidden;
+}
+.PPTlistBody .scaleIt,.coverIt{
+	width: 300px;
+	height: 200px;
+	background:white;
+	margin:0 auto;
+	border-radius: 5px;
+	overflow: hidden;
+	box-shadow: 0 0 10px #ccc;
+	position: relative;
+	
+
+}
+.myPPTfooter{
+	width: 100%;
+	height: 10%;
+	float: left;
+	font-size: .01rem;
+	text-align: right;
+	padding-left: 20px;
+	padding-right: 20px;
+	box-shadow: 0 0 10px #ccc;
+	position: relative;
+}
+.myPPTfooter .pageScale{
+	
+	position: absolute;
+	bottom: 20%;
+	left: 20px;
+	font-size: .03rem;
+	color: #337ab7;
+}
+.myPPTfooter div{
+	display: inline;
+}
+.myPPTfooter button{
+	font-size: .01rem;
+	margin:.01rem;
+}
+.scaleIt{
+	padding:20px;
+}
+.pageClone{
+	width: 100%;
+	height: 100%;
+	position: relative;
+	box-sizing:border-box;
+}
+.scaleIt .dom{
+	position: absolute;
+	display: block;
+}
+.coverIt{
+	background:none;
+	float: none;
+	left:50%;
+	margin-left: -150px;
+	top:0px;
+	position: absolute;
+	font-size: 10px;
+	overflow: hidden;
+}
+.coverIt div{
+	width: 100%;
+	height: 40px;
+	background:red;
+	transition:1s;
+	position: absolute;
+	text-align: right;
+	box-shadow: 0 0 5px black;
+	line-height: 40px;
+	padding:0 10px 0 10px;
+}
+.coverIt a{
+	color: white;
+}
+.coverIt a:hover{
+	color:red;
+}
+.coverIt div:nth-child(1){
+	top: -40px;
+}
+.coverIt div:nth-child(2){
+	bottom: -40px;
+
+}
+.coverIt:hover div:nth-child(1){
+	opacity: .5;
+	background:black;
+	color:white;
+	top:0;
+}
+.coverIt:hover div:nth-child(2){
+	opacity: .5;
+	background:black;
+	color:white;
+	bottom:0;
+}
+.PPTlistBody .pptInf{
+	width: 300px;
+	margin:0 auto;
+	font-size: 10px;
+}
+
+/********new ppt*******/
+#new_ppt{
+	position: absolute;
+	width: 300px;
+	height: 100px;
+	line-height: 100px;
+	left: 50%;
+	top: 50%;
+	margin-left: -150px;
+	margin-top: -50px;
+	color:#4787be;
+	font-size: 2em;
+	cursor: pointer;
+}
+.new_option{
+	width: 400px;
+	height: auto;
+	padding:5px;
+	background:white;
+	border-radius: 4px;
+	display: block;
+	position: fixed;
+	top: 50%;
+	left:50%;
+	margin-top: -150px;
+	margin-left: -200px;
+	box-shadow: 0 0 6px black;
+	transition:1s;
+}
+.new_option .n_head{
+	text-align: center;
+	width: 100%;
+	height: 40px;
+	line-height: 40px;
+}
+.new_option .close_option{
+	float: right;
+}
+.new_option li{
+	
+	text-align: right;
+	width: 100%;
+	display: block;
+	height: 40px;
+	margin-top: 10px;
+	line-height: 40px;
+}
+.new_option li:nth-child(2){
+	text-align: center;
+}
+.new_option li span{
+	float: left;
+	margin-right: 30px;
+
+}
+.new_option input{
+	padding-left: 20px;
+	padding-right: 20px;
+}
+.new_option .inputWh{
+	width: 280px;
+	height: 30px;
+	display: inline-block;
+}
+.new_option .n_footer{
+	margin-top: 20px;
+}
+/*
+.domRotate:before{
+	content: ' ';
+	display: block;
+	position: absolute;
+	top: -10px;
+	width: 100%;
+	height: 1px;
+	background: #8cccff;
+	
+}
+.domRotate:after{
+	content: ' ';
+	display: block;
+	position: absolute;
+	width: 10px;
+	height: 10px;
+	top: -20px;
+	left: 50%;
+	margin-left: -5px;
+	border-radius: 50%;
+	border:1px dotted #8cccff;
+	
+}
+*/
+footer{
+	width: 100%;
+	height: .15rem;
+	bottom: 0px;
+	position: fixed;
+	z-index: 99;
+	left:0;
+	line-height: .15rem;
+	font-size: .04rem;
+	display: none;
+}
+

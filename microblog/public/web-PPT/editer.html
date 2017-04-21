@@ -1,0 +1,345 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>web PPT to editor</title>
+	<script type="text/javascript">
+	
+		document.getElementsByTagName('html')[0].style.fontSize = document.documentElement.clientWidth/3 + "px";
+		/*window.onresize = function(){
+			document.getElementsByTagName('html')[0].style.fontSize = document.documentElement.clientWidth/3 + "px";
+		}
+		*/
+
+		
+	</script>
+</head>
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/editStyle.css">
+
+<link rel="stylesheet" type="text/css" href="css/page.css">
+
+
+<script src="./lib/jquery.min.js"></script>
+<script src="./lib/bootstrap.min.js"></script>
+
+<body>
+
+
+
+<!-- 菜单栏-->
+<div id="navRight">
+	<div class="bar">
+		<div id="navHead" style="">
+			
+			
+			
+				<div class="btn-group" >
+					<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="" id="myCenter"><span>my center</span> <span class="caret"></span></button>
+						<ul class="dropdown-menu userList" role="menu"></ul>
+				</div>  
+		</div>
+		<button type="button" class="btn  dropdown-toggle btnCs" data-toggle="dropdown" style="background:white;">
+			<span>开始</span>
+		</button>
+		<button type="button" class="btn  dropdown-toggle btnCs" data-toggle="dropdown" >
+			<span>插入</span>
+		</button>
+		<button type="button" class="btn  dropdown-toggle btnCs" data-toggle="dropdown" >
+			<span>动画</span>
+		</button>
+		<button type="button" class="btn  dropdown-toggle btnCs" data-toggle="dropdown" >
+			<span>演示</span>
+		</button>
+		<button type="button" class="btn  dropdown-toggle btnCs" data-toggle="dropdown"  >
+			<span>轮廓</span>
+		</button>
+		<button type="button" class="btn  dropdown-toggle btnCs" data-toggle="dropdown"  >
+			<span>形状</span>
+		</button>
+		<button type="button" class="btn  dropdown-toggle btnCs" data-toggle="dropdown"  >
+			<span>背景</span>
+		</button>
+	</div>
+	<div class="barBody">
+		
+		<div class="begin" style="display:block;">
+			<button  title="look view" id="lookView" class=" btn   beginCan">
+				<div class="top">
+					<span class='glyphicon glyphicon-eye-open'></span>
+				</div>
+				
+				<span>放映PPT</span>
+			</button>
+
+			<button  title="look view" id="lookView" class=" btn  beginCan">
+				<div class="top">
+					<span class='glyphicon glyphicon-eye-open'></span>
+				</div>
+				
+				<span>新建PPT</span>
+			</button>
+			<div class='line_l'></div>
+			<div class="beginCan">
+				<div class="top">
+					<div class="" style="float:left;">
+					<div class="input-group">
+						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="toolFontFamily">
+							默认 <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu fontFamily" role="menu">
+							
+						</ul>
+						
+						</div><!-- /input-group -->
+					</div><!-- /.col-lg-6 -->
+
+					<div class="" style="float:left;">
+					<div class="input-group">
+						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="toolSizeFamily">
+							默认 <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu sizeFamily" role="menu">
+							
+						</ul>
+						
+					</div><!-- /.col-lg-6 -->
+					</div>
+				</div>
+				<div class="bottom" style="text-align:left;">
+					<button title="加粗" id="bold" class="colb7"><span class='glyphicon glyphicon-bold'></span></button>
+					<button title="加斜" class="colb7" id="italic"><span class='glyphicon glyphicon-italic'></span></button>
+					<button title="下划线" class="colb7" id="underline"><span class='glyphicon glyphicon-text-width'></span></button>
+					<button title="阴影" class="colswd colb7" id="textSadow"><span class='glyphicon glyphicon-font' style=''></span></button>
+					<div class="btn-group">
+						<button class="fontColor" title="字体颜色" >A<span class="caret fontColors" data-toggle="dropdown"></span></button>
+					    <button type="button" >
+					        
+					        
+					    </button>
+					    <div class="colorTable dhCover colorFt">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class='line_l'></div>
+			<div class="beginCan">
+				<div class="top">
+					<div class="tTextAlign" >
+						<a href="javascript:;" title="向左对齐">
+							<span class="glyphicon glyphicon-align-left"></span>
+						</a>
+						<a href="javascript:;" title="居中对齐">
+							<span class="glyphicon glyphicon-align-center"></span>
+						</a>
+						<a href="javascript:;" title="向右对齐">
+							<span class="glyphicon glyphicon-align-right"></span>
+						</a>
+						
+
+					</div>
+				</div>
+				<div class='bottom'>
+					<div class="insertText">
+						<a href="javascript:;" title="插入链接">
+							<span class="glyphicon glyphicon-paperclip"></span>
+						</a>
+						<a href="javascript:;" title="插入图片">
+						    <span class="glyphicon glyphicon-file"></span>
+						</a>
+						<a href="javascript:;" title="插入列表">
+						    <span class="glyphicon glyphicon-list-alt"></span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div><!-- begin end-->
+		<div class="insert" style="display:none;">
+
+			<div class="insertUl" >
+
+				<button  title="插入文本框"  class="btn   beginCan insertLi">
+						<div class="top">
+							<span class='glyphicon glyphicon-edit'></span>
+						</div>
+						<span>文本框</span>
+				</button>
+				<button  title="插入图形"  class=" btn   beginCan insertLi" >
+					<label for='insertImg'>
+						<div class="top">
+							<span class='	glyphicon glyphicon-unchecked'></span>
+							
+						</div>
+						<span>图形</span>
+					</label>
+						<input type="file" class="boxBgFile" id="insertImg" style="display: none;">
+				</button>
+				<button  title="插入图片"  class=" btn   beginCan insertLi">
+						<div class="top">
+							<span class='glyphicon glyphicon-picture'></span>
+						</div>
+						<span>图片</span>
+				</button>
+				<button  title="插入表格"  class=" btn   beginCan insertLi">
+						<div class="top">
+							<span class='glyphicon glyphicon-th'></span>
+						</div>
+						<span>表格</span>
+				</button>
+				
+			</div>
+		</div>
+		<div class="animate">
+			
+		</div>
+		<div class="displayView">
+			
+		</div>
+		<div class="border" style="display:none;">
+			<div class="radius_li">
+				<span>边框</span>
+				<input type="checkbox" id="borderOnOff">  
+			</div>
+			<div class="radius_li">
+	 	 		<div class="btn-group">
+	 	 				
+						<button type="button" class="btn btn-default dropdown-toggle" 
+								data-toggle="dropdown" id="toolBorderFamily">
+							默认 <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu borderFamily" role="menu" >
+							
+						</ul>
+					
+		 	 	</div>
+
+			</div>
+			<div class='line_l'></div>
+			<div class="radius_li">
+				<div class="btn-group">
+					<button class="borderColors btn btn-default" title="轮廓颜色"><span class='glyphicon glyphicon-pencil' ></button></span>
+				    <button type="button" class="btn btn-default">
+				        <span class="caret fontColors"></span>
+				    </button>
+				    <div class="colorTable dhCover colorBd">
+					</div>
+				</div>
+
+			</div>
+			<!--ending-->
+			<div class='line_l'></div>
+			<div class="radius_li">
+				<span>边框圆角</span> 
+			</div>
+			<div class="beginCan">
+				<div class="top">
+					上左 : <input type="number" class="borderRadius" value="0" /> 
+	 		 		
+				</div>
+				<div class="bottom">
+					上右 : <input type="number" class="borderRadius" value="0"/> 
+				</div>
+			</div>
+			<div class="radius_li">
+				<input type="checkbox" id="radius" name='radius'  style="display:none;" checked="" />
+	 		 	<label href="javascript:;" class="touchRadius hover" for='radius' title="关联"><span class="glyphicon glyphicon-fullscreen"></span></label>
+			</div>
+			<div class="beginCan">
+				<div class="top">
+					下左 : <input type="number" class="borderRadius" value="0"/>
+				</div>
+				<div class="bottom">
+	 		 		下右 : <input type="number" class="borderRadius" value="0"/>
+	 		 	</div>
+			</div>
+			<div class='line_l'></div>
+			<!--ending-->
+			<div class="radius_li">
+				<span>边框大小</span> 
+			</div>
+			<div class="beginCan">
+				<div class="top">
+					上左 : <input type="number" class="borderSize" value="0" /> 
+	 		 		
+				</div>
+				<div class="bottom">
+					上右 : <input type="number" class="borderSize" value="0"/> 
+				</div>
+			</div>
+			<div class="radius_li">
+				<input type="checkbox" id="bdSize" name='bdSize'  style="display:none;" checked=""/>
+	 		 		<label href="javascript:;" class="touchbdSize hover" for='bdSize' title="关联"><span class="glyphicon glyphicon-fullscreen"></span></label>
+			</div>
+			<div class="beginCan">
+				<div class="top">
+					下左 : <input type="number" class="borderSize" value="0"/>
+				</div>
+				<div class="bottom">
+	 		 		下右 : <input type="number" class="borderSize" value="0"/>
+	 		 	</div>
+			</div>
+			<!--ending-->
+		</div>
+		<div class="shape" style="display:none;">
+			<div class="radius_li">
+				<div class="btn-group">
+					<button class="whBgColors btn btn-default" title="背景颜色"><span class='glyphicon glyphicon-pencil' ></button></span>
+				    <button type="button" class="btn btn-default">
+				        <span class="caret whBgColors"></span>
+				    </button>
+				    <div class="colorBg  bgColorTable dhCover">
+					</div>
+				</div>
+			</div>
+			<div class='line_l'></div>
+			<div class="beginCan">
+				<div class="top">
+					宽度： <input type="number" class="boxWidth box" value="0" />
+	 		 		
+				</div>
+				<div class="bottom">
+					高度： <input type="number" class="boxHeight box" value="0"/> 
+				</div>
+			</div>
+			<div class="beginCan">
+				<div class="top">
+					x轴： <input type="number" class="boxX box" value="0"/> 
+	 		 		
+				</div>
+				<div class="bottom">
+					y轴： <input type="number" class="boxY box" value="0"/> 
+				</div>
+			</div>
+			<div class="beginCan">
+				<span>背景图片</span>
+	 	 		<div class="span-r">
+	 	 		<label href="javascript:;" class="BoxBgFileT" for='boxBgFile'>
+		 	 		上传图片
+		 	 	</label>
+		 	 	<input type="file" class="boxBgFile" id="boxBgFile" style="display: none;" />
+		 	 	</div>
+			</div>
+		</div>
+	</div>
+	
+</div>
+ 
+<div class="pageGoTo" style="display:none;">
+	<div class="cPage" style="font-size:4em;" id="addPage">点击添加页面</div>
+</div>
+<section>
+</section>
+</body>
+<script type="text/javascript" src="js/displayView.js"></script>
+<script type="text/javascript" src="js/view.js"></script>
+<script type="text/javascript" src="js/connect.js"></script>
+<script src="js/edit_fun.js"></script>
+
+<script type="text/javascript">
+/*
+	   document.onselectstart=function(){return false;} //禁止文本被选中
+*/
+	
+</script>
+</html>
