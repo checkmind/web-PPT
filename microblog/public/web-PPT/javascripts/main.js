@@ -4,7 +4,8 @@ require.config({
 			deps : ['jquery']
 		},
 		'edit_fun' : {
-			deps : ['jquery']
+			deps : ['jquery'],
+			exports : 'ppt'
 		}
 	},
 	paths : {
@@ -13,6 +14,6 @@ require.config({
 		'edit_fun' : 'edit_fun'
 	}
 });
-require(['edit_fun'],function(d){
-	console.log(d)
+require(['edit_fun'],function(it){
+	console.log(it)
 });
