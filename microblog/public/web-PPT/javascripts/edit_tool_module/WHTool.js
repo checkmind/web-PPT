@@ -1,5 +1,6 @@
 define(['edit_fun'],function(ppt){
 	var _this = ppt;
+
 	var WhToolObj = {
 		init : function(){
 			WhToolObj.wAndH();
@@ -8,7 +9,7 @@ define(['edit_fun'],function(ppt){
 		}
 	};
 	WhToolObj.wAndH = function(){
-			
+			console.log(_this.oneInput)
 			_this.oneInput({
 				class : '.boxWidth',
 				style : 'width'
@@ -19,7 +20,7 @@ define(['edit_fun'],function(ppt){
 			})
 	}
 	WhToolObj.lAndT = function(){
-
+			
 			_this.oneInput({
 				class : '.boxX',
 				style : 'left'

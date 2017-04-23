@@ -235,29 +235,29 @@
 			_this.observer.createName('openPPT').listen("openPPT",function(){
 				
 				/*********init insert tool 插入操作 图片 超链接 文本*****/
-				require(['edit_tool_module/insert']);
+				require(['insert']);
 				/*******init font tool 字体大小样式******/
-				require(['edit_tool_module/fontTool']);
+				require(['fontTool']);
 				/******init borderTool 边框大小样式 *******/
 				
-				require(['edit_tool_module/borderTool']);
+				require(['borderTool']);
 				/******init WhTool 宽度高度位置*/
-				require(['edit_tool_module/WHTool']);
+				require(['WHTool']);
 				//事件捕捉
-				_this.catchFn();
+				//_this.catchFn();
+				require(['catchFn']);
 					//初始化根字体
 				_this.parentSize();
 
-				_this.pageGoToFns();
-				
-				
+				//_this.pageGoToFns();
+				require(['ppt_manager_module/pageGoToFns'],function(pageGoTo){
 
-				for(var i =0,len = _this.sectionObj.length;i< len;i++){
-					_this.pageGoTo.addPage(false);
-					_this.fillView(".page:eq("+i+")",_this.sectionObj[i],i);	
-				}
-			
-
+					for(var i =0,len = _this.sectionObj.length;i< len;i++){
+						pageGoTo.addPage(false);
+						_this.fillView(".page:eq("+i+")",_this.sectionObj[i],i);	
+					}
+					
+				});
 			});
 			_this.observer.createName('openPPT').publish("openPPT");	
 			
@@ -477,69 +477,6 @@
 		
 
 		
-		// *****************
-		_this.dragScale = function(obj){ //控制控件右下角缩放
-			obj = "."+obj + ':eq(1)';
-			$(obj).mousemove(function(ev){
-					var width = $(obj).innerWidth();
-					var height = $(obj).innerHeight();
-					var oLeft =  $(obj).offset().left;
-					var oTop = $(obj).offset().top;
-				if(ev.offsetX>=_this.eMinTriger&&ev.offsetY>=_this.eMinTriger&&ev.offsetX<=width-_this.eMinTriger&&ev.offsetY<=height-_this.eMinTriger){
-			  		$(obj).css("cursor",_this.cursor[2]);
-			  		
-			  	}else{	
-					  	if(_this.scaleOnoff(ev,width,height)){ //
-					  		$(obj).css("cursor",_this.cursor[1])
-					  		
-					  		_this.addWH({
-				  				x : ev.clientX,
-				  				y : ev.clientY,
-				  				obj : obj,
-				  				width : width,
-				  				height : height,
-				  				left : oLeft,
-				  				top : oTop,
-				  				dir : 4
-				  			})
-				  			
-					  	}	
-					  	
-				  	}
-			});
-		}
-		
-		_this.addWH = function(json){
-			return false;
-			$(json.obj).mousedown(function(ev){
-				var x_X = ev.clientX,
-				    y_Y = ev.clientY,
-				    num = 0,
-				    num_H = 0;
-				if(!_this.scaleOnoff(ev,json.width,json.height))
-					return;
-				$(document).mousemove(function(ev){
-						 num = (ev.clientX-json.x)||0; //增数
-						 num_H = (ev.clientY-json.y)||0;
-						$(json.obj).css("width",(num+json.width + "px"));
-						$(json.obj).css("height",(num_H+json.height +"px"));
-				})
-				var fn = function(){
-					$(document).unbind("mousemove");
-					$(document).unbind("mouseup",fn);
-					$('.'+_this.nowId+':eq(0)').css({
-					"width":(num+json.width + "px"),
-					"height":(num_H+json.height +"px")
-					})
-					json = {
-						width :  _this.percentCal(num+json.width,true),
-						height :  _this.percentCal(num_H+json.height,false) 
-					}
-					_this.addEleStyles(_this.nowId,'block',json)
-				}
-				$(document).mouseup(fn);
-			})			
-		}
 
 		_this.ABS = function(num){  //绝对值
 			
@@ -553,121 +490,6 @@
 		
 	
 
-	//捕捉事件
-	ppt_edit.prototype.catchFn = function(){
-		let onoffMove = function(ev,target,width,height){
-			let topDvalue = ev.clientY - $(target).offset().top;
-			let bottomDvalue = ev.clientY - $(target).offset().top-height;
-			let leftDvalue = ev.clientX - $(target).offset().left;
-			let rightDvalu = ev.clientX - $(target).offset().left-width;
-			
-			if(topDvalue <= _this.eMinTriger ){
-				return true;
-			}
-			return false;
-		}
-		$("section").mousemove(function(ev){   //鼠标样式
-			var ev = ev || window.event;
-			var target = ev.target||ev.srcElement;
-			var isChild = /dom/.test(target.className);
-			var isImg = $(target)[0].tagName.toLowerCase()==='img';
-			var left,top,x,y,width,height;
-			var _cursor = function(targ){
-					width = targ.innerWidth();
-					height = targ.innerHeight();
-					if(onoffMove(ev,target,width,height)){
-						targ.css("cursor","move");
-					}
-					else if(_this.scaleOnoff(ev,width,height))
-						targ.css("cursor",_this.cursor[1])
-					else
-						targ.css("cursor","text");	
-			}
-			if(isChild){
-				_cursor($(target));
-			}
-			if(isImg){
-				_cursor($(target).parents('.dom'));
-			}	 
-		});
-		$("section").mousedown(function(ev){  
-			var ev = ev || window.event;
-			var target = ev.target||ev.srcElement;
-			var className = target.className;
-			var isChild = /dom/.test(className);
-			var isImg = $(target)[0].tagName.toLowerCase()==='img';
-			var left,top,x,y,width,height;
-
-			left = $(target).position().left;
-			top = $(target).position().top;
-			width = $(target).width();
-			height = $(target).height()
-			x = ev.clientX;
-			y = ev.clientY;
-			
-			if(ev.button==2)
-				console.log('右键');
-			if(ev.button==0&&isImg){ //如果是图片
-				ev.preventDefault();
-				$(target).parents('.dom').focus().css('outline','red');
-				//return false;
-			}
-			if(ev.button==0&&isChild){
-				_this.nowId = className.split(' ')[0].trim();
-				
-				if(onoffMove(ev,target,width,height)){  //位置
-					$(document).mousemove(function(ev){
-						$(target).css("left",left+(ev.clientX - x)+'px');
-						$(target).css("top",top+(ev.clientY - y)+'px');
-						return false;
-					})
-					$(document).mouseup(function(){
-						let x_x = Math.floor($(target).position().left);
-						let y_y =Math.floor($(target).position().top);
-						var json = {
-							left :  _this.percentCal(x_x,true),
-							top :  _this.percentCal(y_y,false)
-						};
-						
-						$('.'+_this.nowId).css("left",x_x+'px');
-						$('.'+_this.nowId).css("top",y_y+'px');
-						//绑定控件
-						$(".boxX").val(x_x)
-						$(".boxY").val(y_y)
-						_this.addEleStyles(_this.nowId,'block',json)
-						$(document).unbind("mousemove");
-						$(document).unbind("mouseup");
-					})
-				}
-				if(_this.scaleOnoff(ev,$(target).width(),$(target).height())){  //尺寸
-					$(document).mousemove(function(ev){
-						var num_W = (ev.clientX-x)||0;
-						var num_H = (ev.clientY-y)||0;
-						$(target).css("width",(num_W + width + "px"));
-						$(target).css("height",(num_H + height +"px"));
-						return false;
-					})
-					$(document).mouseup(function(){
-						let w_w = Math.floor($(target).width());
-						let h_h = Math.floor($(target).height());
-						var json = {
-							width :  _this.percentCal(w_w,true),
-							height:  _this.percentCal(h_h,false)
-						};
-
-						$('.'+_this.nowId).css("width",w_w+'px');
-						$('.'+_this.nowId).css("height",h_h+'px');
-						//绑定控件
-						$(".boxWidth").val(w_w);
-						$(".boxHeight").val(h_h);
-						_this.addEleStyles(_this.nowId,'block',json)
-						$(document).unbind("mousemove");
-						$(document).unbind("mouseup");
-					})
-				}
-			}
-		})
-	}
 
 
 	
@@ -1193,75 +1015,6 @@ ppt_edit.prototype.myComfire = function(inf,fn){
 	  }else{
 	     return false;
 	 }
-}
-/*************PPT pageGoToFns*****************/
-ppt_edit.prototype.pageGoTo={
-	
-	pageStyle : function(){
-		var that= this;
-		//$(view.pageGoTo).insertBefore($("#addPage"));
-		$(".pageGoTo").addClass('pageGoToFns');
-		setTimeout(function(){
-				that.initPageCan();
-				$(".pageGoTo").css("display","block");
-				$("#addPage").click(function(){
-						that.addPage(true);
-				});
-		},300)
-	
-	},
-	initPageCan : function(){
-
-		var x = _this.page.x,
-			y = _this.page.y;
-		$(".pageGoToFns").css("width",x+'px');
-		$(".pageGoToFns").css("height",y*5+'px');
-		/*
-		for(var i =0;i< _this.sectionObj.length;i++){
-			$(view.pageGoTo).insertBefore($("#addPage"));
-			displayView(".cPage:eq("+i+")","pageClone",'['+JSON.stringify(_this.sectionObj[i])+']',0);	
-		}
-		*/
-	},
-	addPage : function(onoff){ //是否需要增加 sectionObj里面的对象数组
-		$(view.pageGoTo).insertBefore($("#addPage"));
-		$("section").append(view.headTitle);
-		$(".cPage").css("height",_this.page.y+"px");
-		
-		_this.pageNow = _this.pageNum++;
-		if(onoff)
-			_this.upDateFn.pushs({name:'addPage'});
-
-		_this.eleScale.push({
-			"element": {
-				
-			}
-		});
-	
-		this.cutPage(_this.pageNow);
-	},
-	addPageEvent : function(){
-		that = this;
-		$(".cPage").css("height",_this.page.y+"px");
-		_this.pageNow =	_this.pageNum++;
-		$("#addPage").click(function(){
-			that.addPage(true);
-		});
-		that.cutPage(_this.pageNow);
-	},
-	cutPage : function(num){
-		var	that = this;
-		$('.cPage:eq('+num+')').click(function(){
-			$(".page:eq("+(_this.pageNow)+")").css("display","none");
-			$(".page:eq("+num+")").css("display","block");
-			
-			_this.pageNow = num;
-		})   
-	}
-}
-ppt_edit.prototype.pageGoToFns = function(){
-	_this.pageGoTo.pageStyle();
-	
 }
 /*************PPT list ***************/
 
