@@ -4,7 +4,7 @@ require.config({
 			deps : ['jquery']
 		},
 		'edit_fun' : {
-			deps : ['jquery'],
+			deps : ['jquery','bootstrap'],
 			exports : 'ppt'
 		}
 	},
@@ -17,7 +17,9 @@ require.config({
 		'fontTool'    : 'edit_tool_module/fontTool',
 		'borderTool'  : 'edit_tool_module/borderTool',
 		'WHTool'      : 'edit_tool_module/WHTool',
-		'catchFn' : 'common_module/catchFn'
+		'catchFn' : 'common_module/catchFn',
+		'meauList' : 'meau_manager_module/meau_list',
+		'PPTlist' : 'ppt_manager_module/PPT_list'
 	}
 });
 require(['edit_fun'],function(){

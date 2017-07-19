@@ -73,57 +73,7 @@
 				return   percent.toFixed() + '%';
 			})();
 		}
-		/*
-		_this.sectionObj = [{
-			"parameter" : {
-				
-			},
-			"element" : {
-				"1_0e0" : {
-							"type" : 'div',
-							"text" : {
-								"value" : "点击添加标题"
-							}, //内容
-							"attr" : { //attr属性
-								"class" : "1_0e0"
-							},
-							"block" : {  //style属性
-								"top" : ".1rem"
-							},
-							"animate" : { //运动参数
-								"animateIn" : { //入场动画
-									"top" : "1rem"
-								},
-								"animateOut" : { // 出场动画
-									"top" : "3rem"
-								}
-							}
-				
-						},
-				"1_0e1" : {
-							"type" : 'div',
-							"text" : {
-								"value" : "点击添加内容"
-							}, //内容
-							"attr" : { //attr属性
-								"class" : "1_0e1"
-							},
-							"block" : {  //style属性
-								
-							},
-							"animate" : { //运动参数
-								"animateIn" : { //入场动画
-									"top" : "1rem"
-								},
-								"animateOut" : { // 出场动画
-									"top" : "3rem"
-								}
-							}
-				}		
-			}
-
-		}];
-		*/
+		
 		_this.sectionObj = [{
 			"parameter" : {
 				
@@ -210,17 +160,19 @@
 	
 		_this.eleScale = [];
 		_this.init = function(){  //初始化
-			
+
+			require(['PPTlist']);  //这里注册了 发布订阅 的登陆时间 底部的ppt列表
 			/**************loginOrOut********/
-			connect.loginOrOut(function(){
+			connect.loginOrOut(function(){  
 
 				/*******connect ***********/
 				connect.addUserList();
 				/*********init muau tool ******/
-				_this.muauListFun();
-				
+				//_this.muauListFun();
+				require(['meauList']);
 				/***********ppt list *********/
-				_this.PPTlistFun();
+				//_this.PPTlistFun();
+				
 				/***********init bar **********/
 				_this.barFun();
 				
@@ -230,7 +182,6 @@
 			connect.relyOn.single =  _this.single;
 			connect.relyOn.observer = _this.observer;
 
-			
 
 			_this.observer.createName('openPPT').listen("openPPT",function(){
 				
@@ -259,7 +210,7 @@
 					
 				});
 			});
-			_this.observer.createName('openPPT').publish("openPPT");	
+			//_this.observer.createName('openPPT').publish("openPPT");	
 			
 		}
 		/*
@@ -1016,390 +967,9 @@ ppt_edit.prototype.myComfire = function(inf,fn){
 	     return false;
 	 }
 }
-/*************PPT list ***************/
 
-ppt_edit.prototype.PPTlist = {
-	sort: '{"page":1,"pageNum":6,"sort":{"pptCreateDate":-1}}',
-	page : 1, //当前第几页
-	pageNum : 6,
-	sortList :  "pptCreateDate",
-	sortOrder : -1,
-	pageAll : 2,
-	pptName : function(name,pas){
-		if(!name){
-			connect.toast("未输入PPTName");
-			return false;
-		}
-		return true;
-	},
-	passWord : function(name,pas){
-		if($("#unPublic input[name=public]:checked").val()&&!pas){
-			connect.toast("未输入密码");
-			return false;
-		}
-		return true;
-	}
-	
-}
-ppt_edit.prototype.PPTlistFun = function(){
-	_this.observer.createName('login').listen('pptList',function(){
-			$('body').append(view.myPPTList);
-			_this.PPTlist.pageAll = arguments[1];
-			for(var key in _this.PPTlist.pageOperate){
-				_this.PPTlist.pageOperate[key]();
-			}
-			_this.PPTlist.addListEle(arguments[0],true);
-
-	})
-	_this.PPTlist.new_ppt();
-	
-}
-
-ppt_edit.prototype.PPTlist.appendPPTList = function(){
-	var obj = arguments[0],
-	onoff = arguments[1]; //是否开启动画
-	//var thisFun = arguments.callee;
-	return (function(){
-		
-		
-
-		_this.PPTlist.addPPTlistBody(obj);
-		if(onoff)
-			setTimeout(function(){
-				$('.myPPTList').css({"bottom":0,"transition":'.5s'});
-			},50);
-		
-		return true;
-	})();
-}
-ppt_edit.prototype.PPTlist.addListEle = ppt_edit.prototype.single(ppt_edit.prototype.PPTlist.appendPPTList);
-
-ppt_edit.prototype.PPTlist.addPPTlistBody = function(obj){
-	var len = obj.length,
-	str = '',
-	itObj;
-	var getItObj = function(num,obj){
-		return {
-			pptCreateDate : obj[num].pptCreateDate,
-			pptLastAlterDate : obj[num].pptLastAlterDate,
-			pptName : obj[num].pptName,
-			public : obj[num].public,
-			sectionObj :obj[num].sectionObj,
-			_id 	: obj[num]._id
-		}
-	}
-	return (function(){
-	
-		for(var i = 0;i < len; i++){
-			var itObj = getItObj(i,obj); 
-			var fn1 = _this.PPTlist.appendPPT.
-						afterFun( _this.PPTlist.fillCoverIt.
-						afterFun( _this.PPTlist.operatePPT.
-						afterFun(_this.PPTlist.fillPPT) ) );
-			fn1(i,itObj);
-		}
-	})();
 
 	
-}
-ppt_edit.prototype.PPTlist.appendPPT = function(){
-
-	$(".myPPTbody").append(view.PPTlistBody);
-	return true;
-}
-
-ppt_edit.prototype.PPTlist.fillCoverIt = function(index,itObj){
-	
-			$('.lastAlterTime:eq('+ index +')>span').html(_this.formatDateTime(new Date(itObj.pptLastAlterDate)));
-			$('.thisPPTid:eq('+ index +')').val(itObj._id);
-			$('.thisPPTpsWord:eq('+ index +')').val(itObj.psWord);
-			$('.pptInf:eq('+ index +') span:eq(0)').html(itObj.pptName);
-			$('.pptInf:eq('+ index +') span:eq(1)').html(_this.formatDateTime(new Date(itObj.pptCreateDate)));
-			return true;
-}
-ppt_edit.prototype.PPTlist.operatePPT = function(index){
-
-				$('.mngerIt:eq('+index+') a:eq(0)').click(function(){  //delete this ppt
-					_this.myComfire("确认删除？",function(){
-						var id = $('.thisPPTid:eq('+ index +')').val();
-						connect.deletePPT(id,function(){
-							$('.PPTlistBody:eq('+index+')').css({"display":"none"});
-						})
-					})
-				})
-
-				$('.mngerIt:eq('+index+') a:eq(1)').click(function(){  //edit this ppt
-					var id = $('.thisPPTid:eq('+ index +')').val();
-					connect.openPPT(id,function(){
-						var obj = arguments[0],
-							str = {};
-						$("section").html('');
-						if(obj.sectionObj.length!=0){
-							_this.sectionObj = obj.sectionObj;
-						}
-						_this._id = obj._id;
-						_this.pptName = obj.pptName;
-						_this.pptCreateDate = obj.pptCreateDate;
-						_this.pptLastAlterDate = obj.pptLastAlterDate;
-						_this.public = obj.public;
-						
-						_this.observer.createName('openPPT').publish("openPPT");	
-						$('.myPPTList').css({"bottom":'-70%',"transition":'1s'});
-						
-					})
-				})
-				$('.mngerIt:eq('+index+') a:eq(2)').click(function(){  //look this ppt
-
-					window.open("index.html?_id="+ $('.thisPPTid:eq('+ index +')').val(),'_blank');
-				})
-				$('.mngerIt:eq('+index+') a:eq(3)').click(function(){  //safe this ppt
-					
-				})
-				return true;
-}
-ppt_edit.prototype.PPTlist.fillPPT = function(index,itObj){
-
-	displayView(".pageClone:eq("+index+")",itObj.sectionObj);
-}
-ppt_edit.prototype.PPTlist.new_ppt = function(){
-	//$("section").append(view.new_PPT); //add #new_ppt
-	var getItObj = function(obj){
-		return {
-			pptCreateDate : obj.pptCreateDate,
-			pptLastAlterDate : obj.pptLastAlterDate,
-			pptName : obj.pptName,
-			public : obj.public,
-			sectionObj :obj.sectionObj,
-			_id 	: obj._id
-		}
-	}
-	var open = function(){
-		_this.createWindow(view.new_option,".new_option",".close_option");
-		$("#cover").css('display','block');
-		$(".new_option").css('display','block');
-
-		$("#public").click(function(){
-			$(".n_body li:eq(2)").css('display',"none");
-
-		})
-		$("#unPublic").click(function(){
-
-			$(".n_body li:eq(2)").css('display',"block");	
-		})
-		$("#createNew").click(function(){
-			var that = _this.PPTlist,
-			 
-			 	name = $("#newPptName").val(),
-				psw = $("#newPptPsw").val()||null,
-				public = !!$("#unPublic input[name=public]:checked").val(),
-				fn = that.pptName.afterFun(that.passWord.afterFun(function(){
-						connect.new_PPT(name,public,psw,function(json){
-							$("#cover").css('display','none');
-							$(".new_option").css('display','none');
-							_this._id=json.obj._id;
-							_this.pptName = json.obj.pptName;
-							var fn1 = _this.PPTlist.appendPPT.afterFun( _this.PPTlist.fillCoverIt.afterFun( _this.PPTlist.operatePPT.afterFun(_this.PPTlist.fillPPT) ) );
-													
-							fn1($(".PPTlistBody").length,getItObj(json.obj));
-							_this.observer.createName('openPPT').publish("openPPT");
-					});
-				}));
-				
-				fn(name,psw);
-			
-				
-		})
-	}
-	$("#new_ppt").click(function(){
-		
-		open();
-	})
-	$('.userList>li:eq(1)').click(function(){
-
-		open();	
-	})
-
-	
-}
-/*
-sortList : "pptCreateDate",
-	sortOrder : -1, '{"page":1,"pageNum":6,"sort":{"pptCreateDate":-1}}'
-*/
-ppt_edit.prototype.PPTlist.pageOperate = {
-	getPPT : function(){ //获得ppt列表
-		var that = this;
-		return function(){
-			_this.PPTlist.sort = '{"page":'+_this.PPTlist.page+',"pageNum":'+_this.PPTlist.pageNum+',"sort":{"'+_this.PPTlist.sortList+'":'+_this.PPTlist.sortOrder+'}}';
-			connect.findPPT(_this.PPTlist.sort,function(json){
-				if(json.statu){
-						$(".myPPTbody").html('');
-						_this.PPTlist.appendPPTList(json.object,false);
-				}
-				else
-						alert(json.inf)
-			});	
-		}
-		
-	},
-	refreshSort : function(){
-		var that = this;
-		
-		return (function(){
-			$("#sort").click(_this.PPTlist.pageOperate.getPPT());
-			for(var i=0;i< $(".sortList>a").length;i++){ 
-				(function(i){
-					$(".sortList>a:eq("+i+")").click(function(){
-						$("#sortList").html($(this).html()+"  <span class=\"caret\"></span>");
-						_this.PPTlist.sortOrder = $(this).attr('tabindex');
-					})
-					$(".sortObj>a:eq("+i+")").click(function(){
-						$("#sortObj").html($(this).html()+"  <span class=\"caret\"></span>");
-						_this.PPTlist.sortList = $(this).attr('tabindex');
-					})
-				})(i);
-			}	
-		})();
-	},
-	nextPage : function(){
-		var that = this;
-		$("#nextPage").click(function(){
-	
-			if(_this.PPTlist.page!==_this.PPTlist.pageAll){
-				_this.PPTlist.page++;
-				that.getPPT()();
-				
-			}
-			else{
-				alert("到最后一页了!");
-			}
-		});
-	},
-	lastPage : function(){
-		$("#lastPage").click(function(){
-			if(_this.PPTlist.page!==1){
-				_this.PPTlist.page--;
-				_this.PPTlist.pageOperate.getPPT()();
-
-			}else{
-				alert("已经到第一页了!");
-			}
-		});
-	},
-	refreshList : function(){
-		var that = this;
-		$(".myPPThead #refresh").click(_this.PPTlist.pageOperate.getPPT())
-	},
-	closePPT : function(){
-		$(".myPPThead #close").click(function(){
-			$('.myPPTList').css({"bottom":'-70%',"transition":'.5s'});
-		})
-	},
-	pageChange : function(){
-		var that = this;
-		return (function(){
-			var pageAll =_this.PPTlist.pageAll;
-			var ar1 = ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九"];
-			var ar2 = ["十"];
-			var str = '';
-			var fn = function(page){
-				var msg=1; //中文汉字
-				if(0<page<10){
-					msg = ar1[page]; 
-				}
-				if(20>page>=10){
-					if(page==10)
-						msg = ar2[0];
-					else{
-						msg = ar2[0] + ar1[page.substring(1)];
-					}
-				}
-				if(page>=20){
-					msg = ar1[page.substring(0)] + ar1[page.substring(1)];
-				}
-				return msg;	
-			} // fn ending
-			var addList = function(){
-				var pageList = document.getElementById('pageList'),
-				pageList = pageList.getElementsByTagName('a');
-				for(var i=0;i<pageList.length;i++){ 
-						(function(){
-							pageList[i].onclick = function(){
-								
-								$(".pageCg").html($(this).html()+"  <span class=\"caret\"></span>");
-								_this.PPTlist.page = $(this).attr('tabindex')/1;
-								that.getPPT()();
-							}
-						})();
-						
-				}
-			}
-			for(var i =1;i<=pageAll;i++){
-				str += '<a role=\"menuitem\" tabindex='+i+' href=\"#\" >第'+fn(i)+'页</a>';
-			}
-			
-			$("#pageList").html(str);
-			addList();
-		})();
-	}				
-};
-/*************meau list***************/
-	ppt_edit.prototype.meauList = {
-
-	}
-	ppt_edit.prototype.muauListFun = function(){
-		
-		_this.meauList.login();
-		_this.meauList.saveAll();
-		_this.meauList.chagePptName();
-	}
-	ppt_edit.prototype.meauList.saveAll = function(){
-		$("#saveAll").click(function(){
-			
-			connect.sendSectionObj({
-				sectionObj : _this.upDateFn.arr,
-				pptName    : _this.pptName,
-				_id        : _this._id,
-				files      : _this.upDateFn.base64Push
-			},function(){			//提交成功
-				_this.upDateFn.arr.length = 0; 
-				_this.upDateFn.base64Push.length = 0;
-			},function(){
-				console.log("提交失败");
-			});
-		});
-	}
-	ppt_edit.prototype.meauList.login = function(){ // click login and 
-		var loginOnce = _this.single(function(){
-			connect.login(function(){  	// callback to click single
-				var singOnce = _this.single(function(){
-						connect.singBody();		
-						return true;
-					})
-				$('#toSing').click(function(){
-					
-					singOnce();
-					$(".singBody").css('display','block');
-				})
-				
-			});
-			return true;
-		})
-		
-		$('#myCenter').click(function(){
-			var name;
-			if(name = $('#loginOrOutId').val()){
-				return true;
-			}
-			loginOnce();
-			$(".loginBody").css({'display' : 'block'});
-		})
-	}
-	
-	ppt_edit.prototype.meauList.chagePptName = function(){
-		$("#pptName").blur(function(){
-			connect.chagePptName($(this).val);
-		})
-	}
 /***************bar change******************/
 ppt_edit.prototype.barObj = {
 	barArr : ["begin","insert","animate","displayView","border","shape"],

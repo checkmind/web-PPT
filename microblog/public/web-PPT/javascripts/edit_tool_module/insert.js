@@ -12,6 +12,9 @@ define(['edit_fun'],function(ppt){
 			$(".insertLi:eq(1)").click(function(){
 					insert.addImg();
 			})
+			$(".insertLi:eq(4)").click(function(){
+					insert.addCode();
+			})
 		}
 	}
 	insert.addImg = function(){
@@ -61,5 +64,19 @@ define(['edit_fun'],function(ppt){
 		       }
 		      }
 		}
+	insert.addCode = function(){
+		var ele = '<link rel="stylesheet" type="text/css" href="./css/jquery.snippet.css">'
+		$("head").append(ele);
+		var code = '<script src="./javascripts/edit_tool_module/jquery.snippet.js"></script>'
+		$("head").append(code);
+		
+		ppt.addEle({
+			id :_this._id+"_"+ _this.pageNow + "e"+(_this.MaxId+1),
+			type : "div",
+			html : " <pre>this input code</pre>"
+		});
+		$("pre").snippet("javascript", { style: "random", collapse: true, startCollapsed: false});
+
+	}
 	insert.init();
 })
